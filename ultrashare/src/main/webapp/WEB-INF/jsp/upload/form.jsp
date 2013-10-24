@@ -14,7 +14,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>UltraSHARE</h1>
-			<p>Share ANYTHING you like, with ANYONE you want.</p>
+			<p>Share AnyTHING, with AnyONE.</p>
 		</div>
     </div>
     <div class="container">
