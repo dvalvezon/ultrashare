@@ -31,7 +31,7 @@
 							<input type="text" disabled="disabled" id="subfile" class="form-control">
 						</div>
 						<br />
-						<button class="btn btn-danger" type="button" onclick="$('#row1').hide();$('#row2').show();">Confirm!</button>
+						<button class="btn btn-info" type="button" onclick="$('#row1').hide();$('#row2').show();">Next!</button>
 					</div>
 		        </div>
 	    	</div>
@@ -49,7 +49,27 @@
 							<input type="text" name="userMail" class="form-control" placeholder="Your eMail">
 						</div>
 						<br />
-						<button class="btn btn-danger" type="submit">Upload it!</button>
+						<button class="btn btn-info" type="button" onclick="$('#row2').hide();$('#row3').show();">Next!</button>
+					</div>
+		        </div>
+	    	</div>
+	    	<div class="row" id="row3" hidden="true">
+		   		<div class="col-lg-8">
+					<div class="alert alert-info">
+						<label>Now just input your friend's eMail</label>
+						<input type="hidden" name="friendsMails" id="friendsMails">
+						<div class="input-group">
+							<span class="input-group-addon">m@ails</span>
+							<input type="text" id="mailInput" class="form-control" placeholder="Use ',' to input multiple emails">
+							<span class="input-group-btn">
+								<button id="addMails" class="btn btn-default" type="button">Add</button>
+							</span>
+						</div>
+						<br />
+						<ul id="mailList" class="list-group">
+						</ul>
+						<br />
+						<button class="btn btn-danger" type="submit">Send it!</button>
 					</div>
 		        </div>
 	    	</div>
@@ -61,6 +81,17 @@
 		$(document).ready(function() {
 			$('#arquivo').change(function() {
 				$('#subfile').val($(this).val());
+			});
+			$('#addMails').click(function() {
+				$.each($('#mailInput').val().split(','), function (index, value) {
+					if($('#friendsMails').val() == ""){
+						$('#friendsMails').val(value);
+					} else {
+						$('#friendsMails').val($('#friendsMails').val() + ',' + value);
+					}
+					$('#mailList').append('<li class="list-group-item">' + value + '</li>');
+				});
+				$('#mailInput').val('');
 			});
 		});
 	</script>

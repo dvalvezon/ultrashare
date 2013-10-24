@@ -12,7 +12,7 @@ public class UploadController {
 	}
 
 	@Post
-	public void upload(UploadedFile arquivo, String userName, String userMail) {
-		System.out.println(arquivo + " | " + userName + " | " + userMail);
+	public void upload(UploadedFile arquivo, String userName, String userMail, String friendsMails) {
+		System.out.println(arquivo + " | " + userName + " | " + userMail + " | " + friendsMails);
 	}
 }
