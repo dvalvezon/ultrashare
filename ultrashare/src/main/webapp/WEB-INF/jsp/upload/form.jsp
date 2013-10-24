@@ -38,7 +38,7 @@
 	    	<div class="row" id="row2" hidden="true">
 		   		<div class="col-lg-8">
 					<div class="alert alert-info">
-						<label>Provide us your Name & eMail</label>
+						<label>Provide us your Name and eMail</label>
 						<div class="input-group">
 							<span class="input-group-addon">Name</span>
 							<input type="text" name="userName" class="form-control" placeholder="Your Name">
