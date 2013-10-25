@@ -5,15 +5,23 @@
 	http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="default">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.ultrashare.model.Upload</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/desenvolvimento" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="admin" />
+			<property name="javax.persistence.jdbc.user" value="" />
+			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 		</properties>
 	</persistence-unit>
+	<!-- <persistence-unit name="blablabla"> <provider>org.hibernate.ejb.HibernatePersistence</provider> 
+		<properties> <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" 
+		/> <property name="hibernate.connection.username" value="root" /> <property 
+		name="hibernate.connection.password" value="admin" /> <property name="hibernate.connection.url" 
+		value="jdbc:mysql://127.0.0.1:3306/desenvolvimento" /> <property name="hibernate.dialect" 
+		value="org.hibernate.dialect.MySQL5Dialect" /> <property name="hibernate.hbm2ddl.auto" 
+		value="update" /> </properties> </persistence-unit> -->
 </persistence>
