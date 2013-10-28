@@ -5,7 +5,7 @@
 	http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="default">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.ultrashare.model.Upload</class>
+		<!-- <class>com.ultrashare.model.Upload</class> -->
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/desenvolvimento" />

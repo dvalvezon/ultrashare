@@ -4,8 +4,6 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 
-import com.ultrashare.component.FTPPublisher;
-
 @Resource
 public class UploadController {
 
@@ -18,7 +16,8 @@ public class UploadController {
 		System.out.println(arquivo + " | " + userName + " | " + userMail + " | " + friendsMails);
 		System.out.println("File size = " + arquivo.getSize() / 1024 + "MB");
 
-		FTPPublisher.getInstance().sendFileFromStream(arquivo.getFile(), arquivo.getFileName());
+		// FTPPublisher.getInstance().sendFileFromStream(arquivo.getFile(),
+		// arquivo.getFileName());
 
 		// OutputStream outputStream = null;
 		// InputStream inputStream = arquivo.getFile();
