@@ -30,7 +30,7 @@
 						</div>
 			        </div>
 		    	</div>
-		    	<div class="row" id="row2">
+		    	<div class="row" hidden="hidden" id="row2">
 			   		<div class="col-lg-8">
 						<div class="alert alert-info">
 							<div class="form-group">
@@ -50,7 +50,7 @@
 						</div>
 			        </div>
 		    	</div>
-		    	<div class="row" id="row3">
+		    	<div class="row" hidden="hidden" id="row3">
 			   		<div class="col-lg-8">
 						<div class="alert alert-info">
 							<label>Now just input your friend's eMail</label>
@@ -71,7 +71,7 @@
 						</div>
 			        </div>
 		    	</div>
-		    	<div class="row" id="row4">
+		    	<div class="row" hidden="hidden" id="row4">
 			   		<div class="col-lg-8">
 						<div class="alert alert-warning">
 							<label>Hold on! Your file is being uploaded..</label>
@@ -89,9 +89,9 @@
 	   		var emails = new Array();
 			$(document).ready(function() {
 // 				$('#row1').hide();
-				$('#row2').hide();
-				$('#row3').hide();
-				$('#row4').hide();
+// 				$('#row2').hide();
+// 				$('#row3').hide();
+// 				$('#row4').hide();
 				$('#arquivo').change(function() {
 					$('#subfile').val($(this).val());
 				});
