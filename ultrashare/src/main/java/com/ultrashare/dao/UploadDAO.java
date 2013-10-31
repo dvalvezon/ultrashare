@@ -4,10 +4,13 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.persistence.EntityManager;
 
+import br.com.caelum.vraptor.ioc.Component;
+import br.com.caelum.vraptor.ioc.RequestScoped;
+
 import com.ultrashare.model.Upload;
 
-//@Component
-//@RequestScoped
+@Component
+@RequestScoped
 public class UploadDAO extends GenericDAO<Upload> {
 
 	private EntityManager em;

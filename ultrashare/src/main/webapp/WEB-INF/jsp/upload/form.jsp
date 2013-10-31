@@ -89,7 +89,7 @@
 				    	</div>
 		    		</div>
 		    		<div class="col-lg-3">
-		    			<div class="alert alert-warning">
+		    			<div class="alert">
 							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 							<!-- Ultrashare_UploadForm -->
 							<ins class="adsbygoogle"
