@@ -4,13 +4,6 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:template>
 	<jsp:body>
-	   	<div id="erros">
-			<ul>
-				<c:forEach items="${errors}" var="error">
-					<li>${error.category} - ${error.message}</li>
-				</c:forEach>
-			</ul>
-		</div>
 	    <div class="container">
 	    	<div class="row" id="row1">
 		   		<div class="col-lg-8">
@@ -20,7 +13,7 @@
 		        </div>
 		        <div class="col-lg-8">
 					<div class="alert alert-danger">
-						<label>A confirmation email has been sent to ${userMail}.</label>
+						<label>A confirmation email has been sent to ${upload.senderEmail}.</label>
 					</div>
 		        </div>
 	    	</div>

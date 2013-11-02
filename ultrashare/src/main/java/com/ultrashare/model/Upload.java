@@ -1,5 +1,7 @@
 package com.ultrashare.model;
 
+import java.util.Calendar;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,11 +22,26 @@ public class Upload {
 
 	private String recipients;
 
+	private Calendar uploadDate;
+
+	private Boolean isAlreadyConfirmed;
+
+	public Upload() {
+
+	}
+
 	public Upload(String senderName, String senderEmail, String fileName, String recipients) {
 		this.senderName = senderName;
 		this.senderEmail = senderEmail;
 		this.fileName = fileName;
 		this.recipients = recipients;
+		this.uploadDate = Calendar.getInstance();
+		this.isAlreadyConfirmed = false;
+	}
+
+	public Long getConfirmationCode() {
+		return uploadDate.getTimeInMillis() + senderName.hashCode() + senderEmail.hashCode() + fileName.hashCode() + recipients.hashCode()
+				+ isAlreadyConfirmed.hashCode();
 	}
 
 	public Long getId() {
@@ -65,5 +82,21 @@ public class Upload {
 
 	public void setRecipients(String recipients) {
 		this.recipients = recipients;
+	}
+
+	public Calendar getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Calendar uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public Boolean getIsAlreadyConfirmed() {
+		return isAlreadyConfirmed;
+	}
+
+	public void setIsAlreadyConfirmed(Boolean isAlreadyConfirmed) {
+		this.isAlreadyConfirmed = isAlreadyConfirmed;
 	}
 }

@@ -29,11 +29,11 @@
 									<div class="form-group">
 										<div class="input-group">
 											<span class="input-group-btn">
-												<button class="form-control" type="button" onclick="$('#arquivo').click();">Browse</button>
+												<button class="form-control" type="button" onclick="$('#userFile').click();">Browse</button>
 											</span>
 											<input type="text" disabled="disabled" id="subfile" name="subfile" class="form-control" />
 										</div>
-										<input class="sr-only" type="file" id="arquivo" name="arquivo" />
+										<input class="sr-only" type="file" id="userFile" name="userFile" />
 									</div>
 									<button id="nextRow1" class="btn btn-info" type="button">Next!</button>
 								</div>
@@ -99,6 +99,15 @@
 							<script>
 							(adsbygoogle = window.adsbygoogle || []).push({});
 							</script>
+							<br />
+							<!-- Ultrashare_UploadForm2 -->
+							<ins class="adsbygoogle"
+							     style="display:inline-block;width:250px;height:250px"
+							     data-ad-client="ca-pub-3660879360573027"
+							     data-ad-slot="9190840934"></ins>
+							<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+							</script>
 		    			</div>
 		    		</div>
 		    	</div>
@@ -117,7 +126,7 @@
 // 				$('#row2').hide();
 // 				$('#row3').hide();
 // 				$('#row4').hide();
-				$('#arquivo').change(function() {
+				$('#userFile').change(function() {
 					$('#subfile').val($(this).val());
 				});
 				$('#nextRow1').click(function() {
@@ -153,7 +162,7 @@
 				});
 				$('#uploadForm').validate({
 			        rules: {
-			        	arquivo: {
+			        	userFile: {
 			        		required: true
 			        	},
 			        	userName: {
