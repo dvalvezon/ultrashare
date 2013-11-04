@@ -20,9 +20,9 @@ public class UploadController {
 
 	private static Logger logger = Logger.getLogger(UploadController.class);
 
-	private static String CONFIRMATION_EMAIL_MESSAGE_PATTERN = "Dear <recipientName>,\n\nThanks for uploading in UltraSHARE.com!\n\nIn order to share \"<fileName>\" you need to click the link below to confirm your Upload.\n\n<confirmationLink>\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email: support@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";
+	private static String CONFIRMATION_EMAIL_MESSAGE_PATTERN = "Dear <recipientName>,\n\nThanks for uploading in UltraSHARE.com!\n\nIn order to share \"<fileName>\" you need to click the link below to confirm your Upload.\n\n<confirmationLink>\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email:\nsupport@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";
 	private static String CONFIRMATION_EMAIL_SUBJECT_PATTERN = "Confirmation Email for sharing \"<fileName>\" in UltraSHARE.com";
-	private static String CONFIRMATION_EMAIL_LINK_PATTERN = "http://ultrashare.valvezon.com/upload/confirmation/<id>/<confirmationCode>";
+	private static String CONFIRMATION_EMAIL_LINK_PATTERN = "http://ultrashare.valvezon.com/upload/confirm/<id>/<confirmationCode>";
 
 	private Result result;
 
@@ -58,8 +58,8 @@ public class UploadController {
 	@Path("/upload/confirm/{id}/{confirmationCode}")
 	public void confirm(String id, String confirmationCode) {
 		if (!Validate.ifAnyStringIsNullOrEmpty(id, confirmationCode) && !Validate.ifAnyStringIsNotNumeric(id, confirmationCode)) {
-			Upload upload;
-			if ((upload = uploadDao.find(Long.valueOf(id))).getConfirmationCode().equals(Long.valueOf(confirmationCode))) {
+			Upload upload = uploadDao.find(Long.valueOf(id));
+			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(confirmationCode))) {
 				upload.setIsAlreadyConfirmed(true);
 				uploadDao.update(upload);
 				result.redirectTo(this).success(upload);
@@ -93,6 +93,7 @@ public class UploadController {
 
 	private Upload persistUpload(String fileName, String userName, String userMail, String friendsMails) {
 		Upload upload = new Upload(userName, userMail, fileName, friendsMails);
+		// uploadDao.saveInTransaction(upload);
 		uploadDao.save(upload);
 		return upload;
 	}
