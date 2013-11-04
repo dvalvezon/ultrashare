@@ -21,16 +21,24 @@ public abstract class GenericDAO<T> {
 	}
 
 	public void save(T entity) {
+		em.getTransaction().begin();
 		em.persist(entity);
+		em.getTransaction().commit();
 	}
 
 	public void delete(T entity) {
+		em.getTransaction().begin();
 		T entityToBeRemoved = em.merge(entity);
 		em.remove(entityToBeRemoved);
+		em.getTransaction().commit();
 	}
 
 	public T update(T entity) {
-		return em.merge(entity);
+		em.getTransaction().begin();
+		T mergedEntity = em.merge(entity);
+		em.getTransaction().commit();
+		return mergedEntity;
+
 	}
 
 	public T find(Long entityID) {
@@ -58,13 +66,9 @@ public abstract class GenericDAO<T> {
 
 		} catch (Exception e) {
 			if (e instanceof NoResultException) {
-				System.out
-						.println("NoResultException: Query \""
-								+ namedQuery
-								+ "\" nao retornou nenhum resultado para findOneResult()... Prosseguindo...");
+				System.out.println("NoResultException: Query \"" + namedQuery + "\" nao retornou nenhum resultado para findOneResult()... Prosseguindo...");
 			} else {
-				System.out.println("Error while running query: "
-						+ e.getMessage());
+				System.out.println("Error while running query: " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -86,13 +90,9 @@ public abstract class GenericDAO<T> {
 
 		} catch (Exception e) {
 			if (e instanceof NoResultException) {
-				System.out
-						.println("NoResultException: Query \""
-								+ namedQuery
-								+ "\" nao retornou nenhum resultado para findOneResult()... Prosseguindo...");
+				System.out.println("NoResultException: Query \"" + namedQuery + "\" nao retornou nenhum resultado para findOneResult()... Prosseguindo...");
 			} else {
-				System.out.println("Error while running query: "
-						+ e.getMessage());
+				System.out.println("Error while running query: " + e.getMessage());
 				e.printStackTrace();
 			}
 			result = 0;
@@ -102,8 +102,7 @@ public abstract class GenericDAO<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected List<T> findResults(String namedQuery,
-			Map<String, Object> parameters) {
+	protected List<T> findResults(String namedQuery, Map<String, Object> parameters) {
 		List<T> results = null;
 
 		try {
@@ -124,8 +123,7 @@ public abstract class GenericDAO<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected List<T> findResults(String namedQuery,
-			Map<String, Object> parameters, int maxResult) {
+	protected List<T> findResults(String namedQuery, Map<String, Object> parameters, int maxResult) {
 		List<T> results = null;
 
 		try {
@@ -146,8 +144,7 @@ public abstract class GenericDAO<T> {
 		return results;
 	}
 
-	private void populateQueryParameters(Query query,
-			Map<String, Object> parameters) {
+	private void populateQueryParameters(Query query, Map<String, Object> parameters) {
 		for (Entry<String, Object> entry : parameters.entrySet()) {
 			query.setParameter(entry.getKey(), entry.getValue());
 		}

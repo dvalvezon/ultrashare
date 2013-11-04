@@ -8,23 +8,27 @@
 		<class>com.ultrashare.model.Upload</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql1001.mochahost.com:3306/danevils_valvezonhome?autoReconnect=true" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://mysql1001.mochahost.com:3306/danevils_valvezonhome?autoReconnect=true" />
 			<property name="javax.persistence.jdbc.user" value="danevils_admin" />
 			<property name="javax.persistence.jdbc.password" value="password..." />
-<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/desenvolvimento" /> -->
-<!-- 			<property name="javax.persistence.jdbc.user" value="root" /> -->
-<!-- 			<property name="javax.persistence.jdbc.password" value="admin" /> -->
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/desenvolvimento" 
+				/> -->
+			<!-- <property name="javax.persistence.jdbc.user" value="root" /> -->
+			<!-- <property name="javax.persistence.jdbc.password" value="admin" /> -->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+
+			<property name="hibernate.connection.provider_class"
+				value="org.hibernate.connection.C3P0ConnectionProvider" />
+			<property name="hibernate.c3p0.max_size" value="100" />
+			<property name="hibernate.c3p0.min_size" value="0" />
+			<property name="hibernate.c3p0.acquire_increment" value="1" />
+			<property name="hibernate.c3p0.idle_test_period" value="300" />
+			<property name="hibernate.c3p0.max_statements" value="0" />
+			<property name="hibernate.c3p0.timeout" value="100" />
 		</properties>
 	</persistence-unit>
-	<!-- <persistence-unit name="blablabla"> <provider>org.hibernate.ejb.HibernatePersistence</provider> 
-		<properties> <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" 
-		/> <property name="hibernate.connection.username" value="root" /> <property 
-		name="hibernate.connection.password" value="admin" /> <property name="hibernate.connection.url" 
-		value="jdbc:mysql://127.0.0.1:3306/desenvolvimento" /> <property name="hibernate.dialect" 
-		value="org.hibernate.dialect.MySQL5Dialect" /> <property name="hibernate.hbm2ddl.auto" 
-		value="update" /> </properties> </persistence-unit> -->
 </persistence>

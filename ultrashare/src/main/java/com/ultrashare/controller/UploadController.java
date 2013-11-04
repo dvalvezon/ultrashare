@@ -93,7 +93,6 @@ public class UploadController {
 
 	private Upload persistUpload(String fileName, String userName, String userMail, String friendsMails) {
 		Upload upload = new Upload(userName, userMail, fileName, friendsMails);
-		// uploadDao.saveInTransaction(upload);
 		uploadDao.save(upload);
 		return upload;
 	}
