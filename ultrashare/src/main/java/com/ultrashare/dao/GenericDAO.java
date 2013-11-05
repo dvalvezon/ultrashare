@@ -20,23 +20,38 @@ public abstract class GenericDAO<T> {
 		this.em = em;
 	}
 
+	private void openTransaction() {
+		if (!em.getTransaction().isActive()) {
+			em.getTransaction().begin();
+		} else {
+			em.getTransaction().rollback();
+			em.getTransaction().begin();
+		}
+	}
+
+	private void closeTransaction() {
+		if (em.getTransaction().isActive()) {
+			em.getTransaction().commit();
+		}
+	}
+
 	public void save(T entity) {
-		em.getTransaction().begin();
+		openTransaction();
 		em.persist(entity);
-		em.getTransaction().commit();
+		closeTransaction();
 	}
 
 	public void delete(T entity) {
-		em.getTransaction().begin();
+		openTransaction();
 		T entityToBeRemoved = em.merge(entity);
 		em.remove(entityToBeRemoved);
-		em.getTransaction().commit();
+		closeTransaction();
 	}
 
 	public T update(T entity) {
-		em.getTransaction().begin();
+		openTransaction();
 		T mergedEntity = em.merge(entity);
-		em.getTransaction().commit();
+		closeTransaction();
 		return mergedEntity;
 
 	}
