@@ -46,7 +46,7 @@
 										<label>Provide us your Name and eMail</label>
 										<div class="input-group">
 											<span class="input-group-addon">Name</span>
-											<input type="text" name="userName" class="form-control" placeholder="Your Name" />
+											<input type="text" id="userName" name="userName" class="form-control" placeholder="Your Name" />
 										</div>
 									</div>
 									<div class="form-group">
@@ -133,12 +133,14 @@
 					if($('#uploadForm').valid()){
 						$('#row1').hide();
 						$('#row2').show();
+						$('#userName').focus();
 					}
 				});
 				$('#nextRow2').click(function() {
 					if($('#uploadForm').valid()){
 						$('#row2').hide();
-						$('#row3').show();	
+						$('#row3').show();
+						$('#mailInput').focus();
 					} 
 				});
 				$('#nextRow3').click(function() {
@@ -159,6 +161,7 @@
 						}
 					});
 					$('#mailInput').val('');
+					$('#mailInput').focus();
 				});
 				$('#uploadForm').validate({
 			        rules: {
