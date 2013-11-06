@@ -1,4 +1,4 @@
-package com.ultrashare.component;
+package com.ultrashare.component.facilities;
 
 import java.io.File;
 import java.io.FileInputStream;

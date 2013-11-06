@@ -1,4 +1,4 @@
-package com.ultrashare.component;
+package com.ultrashare.component.vo;
 
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 

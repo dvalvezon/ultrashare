@@ -1,9 +1,12 @@
-package com.ultrashare.component;
+package com.ultrashare.component.business;
 
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.caelum.vraptor.ioc.ApplicationScoped;
 import br.com.caelum.vraptor.ioc.Component;
 
+import com.ultrashare.component.facilities.FTPPublisher;
+import com.ultrashare.component.facilities.MailSender;
+import com.ultrashare.component.vo.UploadProcessVO;
 import com.ultrashare.model.Upload;
 
 @Component

@@ -9,9 +9,9 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 
-import com.ultrashare.component.UploadProcessVO;
-import com.ultrashare.component.UploadProcessor;
-import com.ultrashare.component.Validate;
+import com.ultrashare.component.business.UploadProcessor;
+import com.ultrashare.component.facilities.Validate;
+import com.ultrashare.component.vo.UploadProcessVO;
 import com.ultrashare.dao.UploadDAO;
 import com.ultrashare.model.Upload;
 

@@ -1,4 +1,4 @@
-package com.ultrashare.component;
+package com.ultrashare.component.facilities;
 
 import java.util.Arrays;
 import java.util.Properties;

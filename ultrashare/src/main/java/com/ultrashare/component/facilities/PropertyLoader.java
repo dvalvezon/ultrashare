@@ -1,4 +1,4 @@
-package com.ultrashare.component;
+package com.ultrashare.component.facilities;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
