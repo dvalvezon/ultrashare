@@ -7,12 +7,17 @@
     	<div class="row">
 	   		<div class="col-lg-12">
 				<div class="alert alert-success">
-					<label><b>Success!</b> Your file has been sent!</label>
+					<label><b>Success!</b> Your file has been uploaded!</label>
+				</div>
+	        </div>
+	        <div class="col-lg-12">
+				<div class="alert alert-warning">
+					<label>A confirmation email will be sent to ${upload.senderEmail} shortly.</label>
 				</div>
 	        </div>
 	        <div class="col-lg-12">
 				<div class="alert alert-danger">
-					<label>A confirmation email has been sent to ${upload.senderEmail}.</label>
+					<label>Please make sure the confirmation email is not being marked as Spam!</label>
 				</div>
 	        </div>
     	</div>

@@ -3,6 +3,7 @@ package com.ultrashare.component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -68,6 +69,12 @@ public class FTPPublisher {
 			logger.debug("Disconnected.");
 		} catch (Exception e) {
 			logger.error("An error has ocurred...", e);
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				logger.error("Could not close the Input Stream...", e);
+			}
 		}
 		logger.debug("End of private sendFile(InputStream, String) method.");
 	}
