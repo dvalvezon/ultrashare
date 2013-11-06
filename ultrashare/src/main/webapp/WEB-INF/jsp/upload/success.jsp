@@ -4,21 +4,17 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:template>
 	<jsp:body>
-	    <div class="container">
-	    	<div class="row" id="row1">
-		   		<div class="col-lg-8">
-					<div class="alert alert-success">
-						<label><b>Success!</b> Your file has been sent!</label>
-					</div>
-		        </div>
-		        <div class="col-lg-8">
-					<div class="alert alert-danger">
-						<label>A confirmation email has been sent to ${upload.senderEmail}.</label>
-					</div>
-		        </div>
-	    	</div>
-	    </div>
-	    <script src="../js/jquery-2.0.2.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
+    	<div class="row">
+	   		<div class="col-lg-12">
+				<div class="alert alert-success">
+					<label><b>Success!</b> Your file has been sent!</label>
+				</div>
+	        </div>
+	        <div class="col-lg-12">
+				<div class="alert alert-danger">
+					<label>A confirmation email has been sent to ${upload.senderEmail}.</label>
+				</div>
+	        </div>
+    	</div>
 	</jsp:body>
 </t:template>

@@ -22,7 +22,7 @@ public class Upload {
 
 	private String recipients;
 
-	private Calendar uploadDate;
+	private Long uploadTimeInMillis;
 
 	private Boolean isAlreadyConfirmed;
 
@@ -35,12 +35,12 @@ public class Upload {
 		this.senderEmail = senderEmail;
 		this.fileName = fileName;
 		this.recipients = recipients;
-		this.uploadDate = Calendar.getInstance();
+		this.uploadTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		this.isAlreadyConfirmed = false;
 	}
 
 	public Long getConfirmationCode() {
-		return uploadDate.getTimeInMillis() + senderName.hashCode() + senderEmail.hashCode() + fileName.hashCode() + recipients.hashCode()
+		return uploadTimeInMillis + senderName.hashCode() + senderEmail.hashCode() + fileName.hashCode() + recipients.hashCode()
 				+ isAlreadyConfirmed.hashCode();
 	}
 
@@ -84,19 +84,19 @@ public class Upload {
 		this.recipients = recipients;
 	}
 
-	public Calendar getUploadDate() {
-		return uploadDate;
-	}
-
-	public void setUploadDate(Calendar uploadDate) {
-		this.uploadDate = uploadDate;
-	}
-
 	public Boolean getIsAlreadyConfirmed() {
 		return isAlreadyConfirmed;
 	}
 
 	public void setIsAlreadyConfirmed(Boolean isAlreadyConfirmed) {
 		this.isAlreadyConfirmed = isAlreadyConfirmed;
+	}
+
+	public Long getUploadTimeInMillis() {
+		return uploadTimeInMillis;
+	}
+
+	public void setUploadTimeInMillis(Long uploadTimeInMillis) {
+		this.uploadTimeInMillis = uploadTimeInMillis;
 	}
 }
