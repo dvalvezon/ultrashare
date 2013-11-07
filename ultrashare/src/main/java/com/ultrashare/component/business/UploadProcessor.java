@@ -4,7 +4,8 @@ import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.caelum.vraptor.ioc.ApplicationScoped;
 import br.com.caelum.vraptor.ioc.Component;
 
-import com.ultrashare.component.facilities.FTPPublisher;
+import com.ultrashare.component.facilities.FTPHandler;
+import com.ultrashare.component.facilities.FTPSendAction;
 import com.ultrashare.component.facilities.MailSender;
 import com.ultrashare.component.vo.UploadProcessVO;
 import com.ultrashare.model.Upload;
@@ -24,8 +25,10 @@ public final class UploadProcessor extends AbstractProcessor<UploadProcessVO> {
 				.getFileName(), getConfirmationLink(processItem.getUploadEntity()));
 	}
 
-	private static void publishFileInFtp(UploadedFile arquivo) {
-		FTPPublisher.getInstance().sendFileFromStream(arquivo.getFile(), arquivo.getFileName());
+	private static void publishFileInFtp(UploadedFile uploadedFile) {
+		// FTPHandler.getInstance().sendFileFromStream(arquivo.getFile(),
+		// arquivo.getFileName());
+		FTPHandler.processFTPAction(new FTPSendAction(uploadedFile.getFileName(), uploadedFile.getFile()));
 	}
 
 	private static void submitConfirmationEmail(String recipientName, String recipientMail, String fileName, String confirmationLink) {
