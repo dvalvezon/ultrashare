@@ -26,8 +26,6 @@ public final class UploadProcessor extends AbstractProcessor<UploadProcessVO> {
 	}
 
 	private static void publishFileInFtp(UploadedFile uploadedFile) {
-		// FTPHandler.getInstance().sendFileFromStream(arquivo.getFile(),
-		// arquivo.getFileName());
 		FTPHandler.processFTPAction(new FTPSendAction(uploadedFile.getFileName(), uploadedFile.getFile()));
 	}
 
