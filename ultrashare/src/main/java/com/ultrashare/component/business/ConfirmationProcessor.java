@@ -1,11 +1,11 @@
 package com.ultrashare.component.business;
 
-import com.ultrashare.component.vo.confirmationVO;
+import com.ultrashare.component.vo.ConfirmationVO;
 
-public class ConfirmationProcessor extends AbstractProcessor<confirmationVO> {
+public class ConfirmationProcessor extends AbstractProcessor<ConfirmationVO> {
 
 	@Override
-	protected void execute(confirmationVO instance) {
+	protected void execute(ConfirmationVO instance) {
 		// TODO Auto-generated method stub
 
 	}
