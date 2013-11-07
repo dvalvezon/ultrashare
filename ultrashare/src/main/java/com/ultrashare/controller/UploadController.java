@@ -47,7 +47,7 @@ public class UploadController {
 			logger.debug(userFile + " | " + userName + " | " + userMail + " | " + friendsMails);
 			logger.debug("File size = " + userFile.getSize() / (1024 * 1024) + "MB");
 			Upload createdUpload = persistUpload(userFile.getFileName(), userName, userMail, friendsMails);
-			uploadProcessor.addProcess(new UploadProcessVO(userFile, createdUpload));
+			uploadProcessor.process(new UploadProcessVO(userFile, createdUpload));
 			result.redirectTo(this).success(createdUpload);
 		}
 	}
