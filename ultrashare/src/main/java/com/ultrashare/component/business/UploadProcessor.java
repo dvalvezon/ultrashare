@@ -1,12 +1,16 @@
 package com.ultrashare.component.business;
 
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
+import br.com.caelum.vraptor.ioc.ApplicationScoped;
+import br.com.caelum.vraptor.ioc.Component;
 
 import com.ultrashare.component.facilities.FTPPublisher;
 import com.ultrashare.component.facilities.MailSender;
 import com.ultrashare.component.vo.UploadProcessVO;
 import com.ultrashare.model.Upload;
 
+@Component
+@ApplicationScoped
 public final class UploadProcessor extends AbstractProcessor<UploadProcessVO> {
 
 	private static String CONFIRMATION_EMAIL_MESSAGE_PATTERN = "Dear <recipientName>,\n\nThanks for uploading in UltraSHARE.com!\n\nIn order to share \"<fileName>\" you need to click the link below to confirm your Upload.\n\n<confirmationLink>\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email:\nsupport@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";

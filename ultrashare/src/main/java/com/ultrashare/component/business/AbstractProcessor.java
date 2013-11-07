@@ -1,10 +1,5 @@
 package com.ultrashare.component.business;
 
-import br.com.caelum.vraptor.ioc.ApplicationScoped;
-import br.com.caelum.vraptor.ioc.Component;
-
-@Component
-@ApplicationScoped
 public abstract class AbstractProcessor<T> {
 
 	public void process(T instance) {
