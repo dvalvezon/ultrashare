@@ -20,7 +20,7 @@ public class UploadDAO extends GenericDAO<Upload> {
 	}
 
 	@PreDestroy
-	public void postConstruct() {
+	private void closeEmAfterRequest() {
 		if (em.isOpen()) {
 			em.close();
 		}
