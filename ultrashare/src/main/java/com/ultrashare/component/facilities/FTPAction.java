@@ -4,5 +4,5 @@ import org.apache.commons.net.ftp.FTPClient;
 
 public abstract class FTPAction<T> {
 
-	protected abstract T executeAction(FTPClient ftpclient);
+	protected abstract T executeAction(FTPClient openFTPClient);
 }
