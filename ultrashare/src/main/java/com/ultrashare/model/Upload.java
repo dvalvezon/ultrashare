@@ -26,6 +26,10 @@ public class Upload {
 
 	private String fileName;
 
+	private String fileContentType;
+
+	private Long fileSize;
+
 	private String recipients;
 
 	private Calendar creationDate;
@@ -42,10 +46,12 @@ public class Upload {
 
 	}
 
-	public Upload(String senderName, String senderEmail, String fileName, String recipients) {
+	public Upload(String senderName, String senderEmail, String fileName, String fileContentType, Long fileSize, String recipients) {
 		this.senderName = senderName;
 		this.senderEmail = senderEmail;
 		this.fileName = fileName;
+		this.fileContentType = fileContentType;
+		this.fileSize = fileSize;
 		this.recipients = recipients;
 		this.creationDate = Calendar.getInstance();
 		this.creationTimeInMillis = creationDate.getTimeInMillis();
@@ -88,6 +94,22 @@ public class Upload {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
+	public Long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
 	}
 
 	public String getRecipients() {
