@@ -90,4 +90,8 @@ public class Share {
 	public void setDownloadAttempts(Integer downloadAttempts) {
 		this.downloadAttempts = downloadAttempts;
 	}
+
+	public void addDownloadAttempt() {
+		this.downloadAttempts++;
+	}
 }
