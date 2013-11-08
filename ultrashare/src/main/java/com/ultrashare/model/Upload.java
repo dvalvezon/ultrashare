@@ -1,11 +1,17 @@
 package com.ultrashare.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Upload {
@@ -22,9 +28,15 @@ public class Upload {
 
 	private String recipients;
 
-	private Long uploadTimeInMillis;
+	private Calendar creationDate;
+
+	private Long creationTimeInMillis;
 
 	private Boolean isAlreadyConfirmed;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "id")
+	private List<Share> shares;
 
 	public Upload() {
 
@@ -35,12 +47,14 @@ public class Upload {
 		this.senderEmail = senderEmail;
 		this.fileName = fileName;
 		this.recipients = recipients;
-		this.uploadTimeInMillis = Calendar.getInstance().getTimeInMillis();
+		this.creationDate = Calendar.getInstance();
+		this.creationTimeInMillis = creationDate.getTimeInMillis();
 		this.isAlreadyConfirmed = false;
+		this.shares = new ArrayList<Share>();
 	}
 
 	public Long getConfirmationCode() {
-		return uploadTimeInMillis + senderName.hashCode() + senderEmail.hashCode() + fileName.hashCode() + recipients.hashCode()
+		return creationTimeInMillis + senderName.hashCode() + senderEmail.hashCode() + fileName.hashCode() + recipients.hashCode()
 				+ isAlreadyConfirmed.hashCode();
 	}
 
@@ -84,6 +98,22 @@ public class Upload {
 		this.recipients = recipients;
 	}
 
+	public Calendar getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Calendar creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Long getCreationTimeInMillis() {
+		return creationTimeInMillis;
+	}
+
+	public void setCreationTimeInMillis(Long creationTimeInMillis) {
+		this.creationTimeInMillis = creationTimeInMillis;
+	}
+
 	public Boolean getIsAlreadyConfirmed() {
 		return isAlreadyConfirmed;
 	}
@@ -92,11 +122,11 @@ public class Upload {
 		this.isAlreadyConfirmed = isAlreadyConfirmed;
 	}
 
-	public Long getUploadTimeInMillis() {
-		return uploadTimeInMillis;
+	public List<Share> getShares() {
+		return shares;
 	}
 
-	public void setUploadTimeInMillis(Long uploadTimeInMillis) {
-		this.uploadTimeInMillis = uploadTimeInMillis;
+	public void setShares(List<Share> shares) {
+		this.shares = shares;
 	}
 }
