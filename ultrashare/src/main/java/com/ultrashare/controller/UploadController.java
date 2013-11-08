@@ -46,7 +46,7 @@ public class UploadController {
 			// TODO - Implement Logging...
 			logger.debug(userFile + " | " + userName + " | " + userMail + " | " + friendsMails);
 			logger.debug("File size = " + userFile.getSize() / (1024 * 1024) + "MB");
-			Upload createdUpload = persistUpload(userFile.getFileName(), userName, userMail, friendsMails);
+			Upload createdUpload = persistUpload(userFile.getFileName(), userFile.getContentType(), userFile.getSize(), userName, userMail, friendsMails);
 			uploadProcessor.process(new UploadProcessVO(userFile, createdUpload));
 			result.redirectTo(this).success(createdUpload);
 		}
@@ -75,8 +75,8 @@ public class UploadController {
 		return upload;
 	}
 
-	private Upload persistUpload(String fileName, String userName, String userMail, String friendsMails) {
-		Upload upload = new Upload(userName, userMail, fileName, friendsMails);
+	private Upload persistUpload(String fileName, String fileContentType, Long fileSize, String userName, String userMail, String friendsMails) {
+		Upload upload = new Upload(userName, userMail, fileName, fileContentType, fileSize, friendsMails);
 		uploadDao.save(upload);
 		return upload;
 	}
