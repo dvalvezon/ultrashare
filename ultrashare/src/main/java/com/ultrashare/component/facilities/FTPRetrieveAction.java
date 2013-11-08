@@ -17,12 +17,12 @@ public class FTPRetrieveAction extends FTPAction<InputStream> {
 	}
 
 	@Override
-	protected InputStream executeAction(FTPClient ftp) {
+	protected InputStream executeAction(FTPClient ftpClient) {
 		logger.debug("Begin of FTPRetrieveAction's executeAction(FTPClient) method.");
 		InputStream inputStream = null;
 		try {
 			logger.debug("Retrieving InputStream for file " + fileName + "...");
-			inputStream = ftp.retrieveFileStream(fileName);
+			inputStream = new LazyFTPConnectionCloseInputStream(ftpClient, ftpClient.retrieveFileStream(fileName));
 			logger.debug("InputStream retrieved!");
 		} catch (IOException e) {
 			logger.error("Could not retrieve InputStream for file " + fileName + "...", e);
