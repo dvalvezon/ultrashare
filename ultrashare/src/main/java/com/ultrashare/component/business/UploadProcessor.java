@@ -37,7 +37,7 @@ public final class UploadProcessor extends AbstractProcessor<UploadProcessVO> {
 		// CONFIRMATION_EMAIL_SUBJECT_PATTERN.replace("<fileName>", fileName),
 		// getConfirmationMailMessage(recipientName, fileName,
 		// confirmationLink));
-		MailSender.sendMails(Arrays.asList(new MailVO[] { new MailVO(new String[] { recipientName }, CONFIRMATION_EMAIL_SUBJECT_PATTERN.replace("<fileName>",
+		MailSender.sendMails(Arrays.asList(new MailVO[] { new MailVO(new String[] { recipientMail }, CONFIRMATION_EMAIL_SUBJECT_PATTERN.replace("<fileName>",
 				fileName), getConfirmationMailMessage(recipientName, fileName, confirmationLink)) }));
 	}
 
