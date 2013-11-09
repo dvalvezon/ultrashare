@@ -1,5 +1,7 @@
 package com.ultrashare.component.business;
 
+import java.util.Arrays;
+
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.caelum.vraptor.ioc.ApplicationScoped;
 import br.com.caelum.vraptor.ioc.Component;
@@ -7,6 +9,7 @@ import br.com.caelum.vraptor.ioc.Component;
 import com.ultrashare.component.facilities.FTPHandler;
 import com.ultrashare.component.facilities.FTPSendAction;
 import com.ultrashare.component.facilities.MailSender;
+import com.ultrashare.component.vo.MailVO;
 import com.ultrashare.component.vo.UploadProcessVO;
 import com.ultrashare.model.Upload;
 
@@ -21,7 +24,7 @@ public final class UploadProcessor extends AbstractProcessor<UploadProcessVO> {
 	@Override
 	protected void execute(UploadProcessVO processItem) {
 		publishFileInFtp(processItem.getUploadedFile());
-		submitConfirmationEmail(processItem.getUploadEntity().getSenderName(), processItem.getUploadEntity().getSenderEmail(), processItem.getUploadedFile()
+		submitConfirmationEmail(processItem.getUploadEntity().getSenderName(), processItem.getUploadEntity().getSenderEmail(), processItem.getUploadEntity()
 				.getFileName(), getConfirmationLink(processItem.getUploadEntity()));
 	}
 
@@ -30,8 +33,12 @@ public final class UploadProcessor extends AbstractProcessor<UploadProcessVO> {
 	}
 
 	private static void submitConfirmationEmail(String recipientName, String recipientMail, String fileName, String confirmationLink) {
-		MailSender.sendMail(new String[] { recipientMail }, CONFIRMATION_EMAIL_SUBJECT_PATTERN.replace("<fileName>", fileName),
-				getConfirmationMailMessage(recipientName, fileName, confirmationLink));
+		// MailSender.sendMail(new String[] { recipientMail },
+		// CONFIRMATION_EMAIL_SUBJECT_PATTERN.replace("<fileName>", fileName),
+		// getConfirmationMailMessage(recipientName, fileName,
+		// confirmationLink));
+		MailSender.sendMails(Arrays.asList(new MailVO[] { new MailVO(new String[] { recipientName }, CONFIRMATION_EMAIL_SUBJECT_PATTERN.replace("<fileName>",
+				fileName), getConfirmationMailMessage(recipientName, fileName, confirmationLink)) }));
 	}
 
 	private static String getConfirmationMailMessage(String recipientName, String fileName, String confirmationLink) {
