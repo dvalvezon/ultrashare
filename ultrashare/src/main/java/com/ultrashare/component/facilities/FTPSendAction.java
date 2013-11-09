@@ -19,13 +19,13 @@ public class FTPSendAction extends FTPAction<Boolean> {
 	}
 
 	@Override
-	protected Boolean executeAction(FTPClient ftp) {
+	protected Boolean executeAction(FTPClient ftpClient) {
 		logger.debug("Begin of FTPSendAction's executeAction(FTPClient) method.");
 		boolean executed = true;
 		try {
-			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
+			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 			logger.debug("Sending file " + fileName + "...");
-			ftp.storeFile(fileName, inputStream);
+			ftpClient.storeFile(fileName, inputStream);
 			logger.debug("File " + fileName + " sent!");
 		} catch (IOException e) {
 			logger.error("Could not send file to FTP Server...", e);
@@ -35,6 +35,12 @@ public class FTPSendAction extends FTPAction<Boolean> {
 				inputStream.close();
 			} catch (IOException e) {
 				logger.error("Could not close the Input Stream...", e);
+			}
+			try {
+				ftpClient.disconnect();
+				logger.debug("FTPClient Disconnected.");
+			} catch (IOException e) {
+				logger.error("An error ocurred while trying to close the FTPClient.", e);
 			}
 		}
 		logger.debug("End of FTPSendAction's executeAction(FTPClient) method.");
