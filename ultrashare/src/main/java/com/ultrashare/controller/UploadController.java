@@ -9,10 +9,13 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 
+import com.ultrashare.component.business.ConfirmationProcessor;
 import com.ultrashare.component.business.UploadProcessor;
 import com.ultrashare.component.facilities.Validate;
+import com.ultrashare.component.vo.ConfirmationVO;
 import com.ultrashare.component.vo.UploadProcessVO;
 import com.ultrashare.dao.UploadDAO;
+import com.ultrashare.model.Share;
 import com.ultrashare.model.Upload;
 
 @Resource
@@ -26,10 +29,13 @@ public class UploadController {
 
 	private UploadProcessor uploadProcessor;
 
-	public UploadController(Result result, UploadDAO uploadDao, UploadProcessor uploadProcessor) {
+	private ConfirmationProcessor confirmationProcessor;
+
+	public UploadController(Result result, UploadDAO uploadDao, UploadProcessor uploadProcessor, ConfirmationProcessor confirmationProcessor) {
 		this.result = result;
 		this.uploadDao = uploadDao;
 		this.uploadProcessor = uploadProcessor;
+		this.confirmationProcessor = confirmationProcessor;
 	}
 
 	@Get
@@ -58,8 +64,12 @@ public class UploadController {
 		if (!Validate.ifAnyStringIsNullOrEmpty(id, confirmationCode) && !Validate.ifAnyStringIsNotNumeric(id, confirmationCode)) {
 			Upload upload = uploadDao.find(Long.valueOf(id));
 			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(confirmationCode))) {
+				for (String recipient : upload.getRecipients().split(",")) {
+					upload.getShares().add(new Share(upload, recipient));
+				}
 				upload.setIsAlreadyConfirmed(true);
 				uploadDao.update(upload);
+				confirmationProcessor.process(new ConfirmationVO(upload.getShares()));
 				result.redirectTo(this).success(upload);
 				return;
 			}
