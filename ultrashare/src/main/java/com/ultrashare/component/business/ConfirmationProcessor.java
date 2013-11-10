@@ -18,9 +18,9 @@ public class ConfirmationProcessor extends AbstractProcessor<ConfirmationVO> {
 	protected void execute(ConfirmationVO processItem) {
 		List<MailVO> mailsVO = new ArrayList<MailVO>(processItem.getUnmodifiableShareList().size());
 		for (Share share : processItem.getUnmodifiableShareList()) {
-			mailsVO.add(new MailVO(new String[] { share.getRecipientEmail() }, SHARE_EMAIL_SUBJECT_PATTERN.replace("<fileName>", share.getSharedUpload()
-					.getFileName()), getShareMailMessage(share.getSharedUpload().getSenderName(), share.getSharedUpload().getSenderEmail(), share
-					.getSharedUpload().getFileName(), getShareLink(share))));
+			mailsVO.add(new MailVO(new String[] { share.getRecipientEmail() }, SHARE_EMAIL_SUBJECT_PATTERN.replaceAll("<senderName>",
+					share.getSharedUpload().getSenderName()).replaceAll("<fileName>", share.getSharedUpload().getFileName()), getShareMailMessage(share
+					.getSharedUpload().getSenderName(), share.getSharedUpload().getSenderEmail(), share.getSharedUpload().getFileName(), getShareLink(share))));
 		}
 		submitShareEmail(mailsVO);
 	}
@@ -35,6 +35,6 @@ public class ConfirmationProcessor extends AbstractProcessor<ConfirmationVO> {
 	}
 
 	private static String getShareLink(Share share) {
-		return SHARE_EMAIL_LINK_PATTERN.replace("<id>", share.getId().toString()).replace("<confirmationCode>", share.getConfirmationCode().toString());
+		return SHARE_EMAIL_LINK_PATTERN.replaceAll("<id>", share.getId().toString()).replaceAll("<confirmationCode>", share.getConfirmationCode().toString());
 	}
 }
