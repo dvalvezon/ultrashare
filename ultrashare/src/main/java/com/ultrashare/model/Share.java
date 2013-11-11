@@ -27,6 +27,8 @@ public class Share {
 
 	private Integer downloadAttempts;
 
+	private Long lastTimeToken;
+
 	public Share() {
 
 	}
@@ -37,6 +39,7 @@ public class Share {
 		this.creationDate = Calendar.getInstance();
 		this.uploadTimeInMillis = creationDate.getTimeInMillis();
 		this.downloadAttempts = 0;
+		this.lastTimeToken = 0L;
 	}
 
 	public Long getConfirmationCode() {
@@ -93,5 +96,17 @@ public class Share {
 
 	public void addDownloadAttempt() {
 		this.downloadAttempts++;
+	}
+
+	public Long getLastTimeToken() {
+		return lastTimeToken;
+	}
+
+	public void setLastTimeToken(Long lastTimeToken) {
+		this.lastTimeToken = lastTimeToken;
+	}
+
+	public void generateTimeToken() {
+		this.lastTimeToken = System.currentTimeMillis();
 	}
 }
