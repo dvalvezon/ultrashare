@@ -9,34 +9,42 @@
 				<div class="alert alert-info">
 					<label><b>File Information</b></label>
 					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-addon">File Name</span>
-							<input class="form-control" readonly="readonly" value="${share.sharedUpload.fileName}" />
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">File Size</span>
-							<input class="form-control" readonly="readonly" value="${share.fileSizeAsString}" />
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Upload Date</span>
-							<input class="form-control" readonly="readonly" value="${share.sharedUpload.creationDate}" />
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Uploader Name</span>
-							<input class="form-control" readonly="readonly" value="${share.sharedUpload.senderName}" />
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Uploader Email</span>
-							<input class="form-control" readonly="readonly" value="${share.sharedUpload.senderEmail}" />
+						<label class="col-sm-3 control-label">File Name</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">${downloadConfirmVO.fileName}</p>
 						</div>
 					</div>
-					<form action="${pageContext.request.contextPath}/download/start" method="post">
-						<input type="hidden" name="pi" value="${share.id}">
-						<input type="hidden" name="pc" value="${share.confirmationCode}">
-						<a href="${pageContext.request.contextPath}">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">File Size</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">${downloadConfirmVO.fileSize}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Upload Date</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">${downloadConfirmVO.uploadDate}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Uploader Name</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">${downloadConfirmVO.uploaderName}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Uploader Email</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">${downloadConfirmVO.uploaderEmail}</p>
+						</div>
+					</div>
+					<form action="${homeContext}/download/start" method="post">
+						<input type="hidden" name="pi" value="${downloadConfirmVO.id}">
+						<input type="hidden" name="pc" value="${downloadConfirmVO.confirmationCode}">
+						<a href="${homeContext}/">
 							<button type="button" class="btn btn-info">Back</button>
 						</a>
-						<button type="submit" class="btn btn-danger" >Download!</button>
+						<button type="submit" class="btn btn-danger">Download!</button>
 					</form>
 				</div>
 	        </div>
