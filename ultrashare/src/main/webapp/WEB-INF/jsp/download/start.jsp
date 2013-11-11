@@ -6,9 +6,14 @@
 	<jsp:body>
     	<div class="row">
 	   		<div class="col-lg-12">
-				<div class="alert alert-success">
-					<label><b>Thanks for your confirmation!</b> Recipients will now receive a link to download the file!</label>
-					<button type="button" class="btn btn-info" onclick="window.location=${pageContext.request.contextPath}" >Upload Again!</button>
+				<div class="alert alert-info">
+					<label><b>Your download will start shortly!</b></label>
+					<br />
+					<form action="${homeContext}/download/download" method="post">
+						<input type="hidden" name="pid" value="${downloadConfirmVO.id}">
+						<input type="hidden" name="pcon" value="${downloadConfirmVO.confirmationCode}">
+						<button type="submit" class="btn btn-danger">Download!</button>
+					</form>
 				</div>
 	        </div>
     	</div>
