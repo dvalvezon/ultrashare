@@ -9,7 +9,7 @@
 				<div class="alert alert-success">
 					<label><b>Thanks for your confirmation!</b> Recipients will now receive a link to download the file!</label>
 					<br />
-					<a href="${pageContext.request.contextPath}">
+					<a href="${homeContext}/">
 						<button type="button" class="btn btn-info">Upload Again!</button>
 					</a>
 				</div>
