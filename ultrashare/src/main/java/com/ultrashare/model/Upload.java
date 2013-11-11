@@ -6,11 +6,9 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -38,8 +36,7 @@ public class Upload {
 
 	private Boolean isAlreadyConfirmed;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "id")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sharedUpload")
 	private List<Share> shares;
 
 	public Upload() {
@@ -150,5 +147,24 @@ public class Upload {
 
 	public void setShares(List<Share> shares) {
 		this.shares = shares;
+	}
+
+	public String getFileSizeAsString() {
+		Long size = this.fileSize;
+		if (size < 1024) {
+			return size + " B";
+		} else {
+			size = size / 1024;
+			if (size < 1024) {
+				return size + " KB";
+			} else {
+				size = size / 1024;
+				if (size < 1024) {
+					return size + " MB";
+				} else {
+					return (size / 1024) + " GB";
+				}
+			}
+		}
 	}
 }
