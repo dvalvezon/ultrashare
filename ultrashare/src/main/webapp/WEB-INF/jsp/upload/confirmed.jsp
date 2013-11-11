@@ -8,7 +8,10 @@
 	   		<div class="col-lg-12">
 				<div class="alert alert-success">
 					<label><b>Thanks for your confirmation!</b> Recipients will now receive a link to download the file!</label>
-					<button type="button" class="btn btn-info" onclick="window.location=${pageContext.request.contextPath}" >Upload Again!</button>
+					<br />
+					<a href="${pageContext.request.contextPath}">
+						<button type="button" class="btn btn-info">Upload Again!</button>
+					</a>
 				</div>
 	        </div>
     	</div>
