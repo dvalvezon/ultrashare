@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.download.Download;
@@ -66,6 +67,7 @@ public class DownloadController {
 		return new InputStreamDownload(FTPHandler.processFTPAction(new FTPRetrieveAction(fileName)), "application/octet-stream", "test.txt");
 	}
 
+	@Post
 	private Download download(Share share) {
 		return new InputStreamDownload(FTPHandler.processFTPAction(new FTPRetrieveAction(share.getSharedUpload().getFileName())), share.getSharedUpload()
 				.getFileContentType(), share.getSharedUpload().getFileName(), true, share.getSharedUpload().getFileSize());
