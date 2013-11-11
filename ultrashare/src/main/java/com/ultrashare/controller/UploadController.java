@@ -1,5 +1,7 @@
 package com.ultrashare.controller;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 import br.com.caelum.vraptor.Get;
@@ -64,17 +66,23 @@ public class UploadController {
 		if (!Validate.ifAnyStringIsNullOrEmpty(id, confirmationCode) && !Validate.ifAnyStringIsNotNumeric(id, confirmationCode)) {
 			Upload upload = uploadDao.find(Long.valueOf(id));
 			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(confirmationCode))) {
+				ArrayList<Share> shares = new ArrayList<Share>();
 				for (String recipient : upload.getRecipients().split(",")) {
-					upload.getShares().add(new Share(upload, recipient));
+					shares.add(new Share(upload, recipient));
 				}
 				upload.setIsAlreadyConfirmed(true);
-				uploadDao.update(upload);
-				confirmationProcessor.process(new ConfirmationVO(upload.getShares()));
-				result.redirectTo(this).success(upload);
+				upload.setShares(shares);
+				upload = uploadDao.update(upload);
+				confirmationProcessor.process(new ConfirmationVO(shares));
+				result.redirectTo(this).confirmed(upload);
 				return;
 			}
 		}
 		result.redirectTo(this).form();
+	}
+
+	public Upload confirmed(Upload upload) {
+		return upload;
 	}
 
 	public Upload success(Upload upload) {
