@@ -4,7 +4,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:template>
 	<jsp:body>
-		<form id="uploadForm" role="form" action="${pageContext.request.contextPath}/upload/upload" enctype="multipart/form-data" method="post">
+		<form id="uploadForm" role="form" action="${homeContext}/upload/upload" enctype="multipart/form-data" method="post">
   			<div class="row" id="row0">
 		   		<div class="col-lg-12">
 					<div class="alert alert-warning">
