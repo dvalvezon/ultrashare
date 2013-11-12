@@ -24,6 +24,18 @@ public final class Log {
 		return message;
 	}
 
+	public static String message(String message, LogEntry... params) {
+		String returnMessage = message + " ";
+		returnMessage += formatParametersMessage(params);
+		return returnMessage;
+	}
+
+	public static String message(String preMessage, String posMessage, LogEntry... params) {
+		String returnMessage = preMessage + " ";
+		returnMessage += formatParametersMessage(params);
+		return returnMessage + " " + posMessage;
+	}
+
 	public static String footer(String methodName, Object returnEntry, LogEntry... params) {
 		String message = "End of method " + methodName + "() ";
 		if (returnEntry != null) {
