@@ -4,12 +4,13 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:template>
 	<jsp:body>
+		<c:set var="bodyContext" value="${pageContext.request.contextPath}"/>
     	<div class="row">
 	   		<div class="col-lg-12">
 				<div class="alert alert-success">
 					<label><b>Thanks for your confirmation!</b> Recipients will now receive a link to download the file!</label>
 					<br />
-					<a href="${homeContext}/">
+					<a href="${bodyContext}/">
 						<button type="button" class="btn btn-info">Upload Again!</button>
 					</a>
 				</div>

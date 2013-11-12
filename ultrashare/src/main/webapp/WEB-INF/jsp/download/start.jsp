@@ -4,12 +4,13 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:template>
 	<jsp:body>
+		<c:set var="bodyContext" value="${pageContext.request.contextPath}"/>
     	<div class="row">
 	   		<div class="col-lg-12">
 				<div class="alert alert-info">
 					<label><b>Your download will start shortly!</b></label>
 					<br />
-					<form action="${homeContext}/download/download" method="post">
+					<form action="${bodyContext}/download/download" method="post">
 						<input type="hidden" name="pid" value="${downloadConfirmVO.id}">
 						<input type="hidden" name="pcon" value="${downloadConfirmVO.confirmationCode}">
 						<button type="submit" class="btn btn-danger">Download!</button>

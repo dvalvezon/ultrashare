@@ -4,6 +4,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:template>
 	<jsp:body>
+		<c:set var="bodyContext" value="${pageContext.request.contextPath}"/>
     	<div class="row">
 	   		<div class="col-lg-12">
 				<div class="alert alert-info">
@@ -38,10 +39,10 @@
 							<p class="form-control-static">${downloadConfirmVO.uploaderEmail}</p>
 						</div>
 					</div>
-					<form action="${homeContext}/download/start" method="post">
+					<form action="${bodyContext}/download/start" method="post">
 						<input type="hidden" name="pi" value="${downloadConfirmVO.id}">
 						<input type="hidden" name="pc" value="${downloadConfirmVO.confirmationCode}">
-						<a href="${homeContext}/">
+						<a href="${bodyContext}/">
 							<button type="button" class="btn btn-info">Back</button>
 						</a>
 						<button type="submit" class="btn btn-danger">Download!</button>
