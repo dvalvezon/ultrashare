@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 
 import com.ultrashare.component.business.ConfirmationProcessor;
 import com.ultrashare.component.business.UploadProcessor;
+import com.ultrashare.component.facilities.Log;
 import com.ultrashare.component.facilities.Validate;
 import com.ultrashare.component.vo.ConfirmationVO;
 import com.ultrashare.component.vo.UploadProcessVO;
@@ -47,17 +48,24 @@ public class UploadController {
 
 	@Post
 	public void upload(UploadedFile userFile, String userName, String userMail, String friendsMails) {
+		logger.debug(Log.header("upload", Log.entry("userFile", userFile), Log.entry("userName", userName), Log.entry("userMail", userMail),
+				Log.entry("friendsMails", friendsMails)));
+		Upload createdUpload = null;
 		if (Validate.ifAnyObjectIsNull(userFile) || Validate.ifAnyStringIsNullOrEmpty(userName, userMail, friendsMails)) {
-			logger.debug("Redirecting to upload form. Parameters were missing...");
+			logger.warn("Invalid parameters detected!");
 			result.redirectTo(this).form();
+			logger.debug("Request will be redirected to form()");
 		} else {
-			// TODO - Implement Logging...
-			logger.debug(userFile + " | " + userName + " | " + userMail + " | " + friendsMails);
-			logger.debug("File size = " + userFile.getSize() / (1024 * 1024) + "MB");
-			Upload createdUpload = persistUpload(userFile.getFileName(), userFile.getContentType(), userFile.getSize(), userName, userMail, friendsMails);
+			logger.debug("Valid parameters. Persisting upload...");
+			createdUpload = persistUpload(userFile.getFileName(), userFile.getContentType(), userFile.getSize(), userName, userMail, friendsMails);
+			logger.debug("Upload persisted");
+			logger.info("New upload created. " + Log.parameters(Log.entry("createdUpload", createdUpload)));
+			logger.debug("Submitting created download to UploadProcessor.");
 			uploadProcessor.process(new UploadProcessVO(userFile, createdUpload));
+			logger.debug("Redirecting to success page");
 			result.redirectTo(this).success(createdUpload);
 		}
+		logger.debug(Log.footer("upload", Log.entry("createdUpload", createdUpload)));
 	}
 
 	@Get
@@ -94,6 +102,7 @@ public class UploadController {
 	}
 
 	private Upload persistUpload(String fileName, String fileContentType, Long fileSize, String userName, String userMail, String friendsMails) {
+		logger.trace("Begin of method persistUpload() - Parameters: file");
 		Upload upload = new Upload(userName, userMail, fileName, fileContentType, fileSize, friendsMails);
 		uploadDao.save(upload);
 		return upload;
