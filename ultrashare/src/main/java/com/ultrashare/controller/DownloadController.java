@@ -16,6 +16,7 @@ import com.ultrashare.component.facilities.Validate;
 import com.ultrashare.component.vo.DownloadConfirmVO;
 import com.ultrashare.dao.ShareDAO;
 import com.ultrashare.model.Share;
+import com.ultrashare.model.Upload;
 
 @Resource
 public class DownloadController {
@@ -49,6 +50,11 @@ public class DownloadController {
 	}
 
 	public DownloadConfirmVO confirm(Share share) {
+		Upload upload = new Upload("Danilo Valvezon", "danilovalvezon@hotmail.com", "hosts", "application/text", 8000L,
+				"danilovalvezon@hotmail.com,ver_dvalvezon@hotmail.com");
+		upload.setId(1L);
+		share = new Share(upload, "danilovalvezon@hotmail.com");
+		share.setId(1L);
 		return new DownloadConfirmVO(share);
 	}
 
