@@ -58,48 +58,12 @@ public class UploadController {
 		logger.debug(Log.footer("upload", Log.entry("createdUpload", createdUpload)));
 	}
 
-	// @Get
-	// @Path("/upload/confirm/{id}/{confirmationCode}")
-	// public void confirm(String id, String confirmationCode) {
-	// logger.debug(Log.header("confirm", Log.entry("id", id),
-	// Log.entry("confirmationCode", confirmationCode)));
-	// if (!Validate.ifAnyStringIsNullOrEmpty(id, confirmationCode) &&
-	// !Validate.ifAnyStringIsNotNumeric(id, confirmationCode)) {
-	// logger.debug(Log.message("Valid parameters. Querying for upload..."));
-	// Upload upload = uploadDao.find(Long.valueOf(id));
-	// logger.debug(Log.message("Query finished. Validating upload...",
-	// Log.entry("upload", upload)));
-	// if (upload != null &&
-	// upload.getConfirmationCode().equals(Long.valueOf(confirmationCode))) {
-	// logger.debug(Log.message("Upload validated."));
-	// upload.setIsAlreadyConfirmed(true);
-	// upload = uploadDao.update(upload);
-	// logger.info(Log.message("Upload updated.", Log.entry("upload", upload)));
-	// logger.debug(Log.message("Redirecting to confirmed page"));
-	// result.redirectTo(this).confirmed(upload);
-	// } else {
-	// logger.debug(Log.message("Upload is not valid."));
-	// redirectToForm();
-	// }
-	// } else {
-	// logger.warn("Invalid parameters detected!");
-	// redirectToForm();
-	// }
-	// logger.debug(Log.footer("confirm"));
-	// }
-
 	private void redirectToForm() {
 		logger.trace(Log.header("redirectToForm"));
 		result.redirectTo(this).form();
 		logger.debug("Request will be redirected to form()");
 		logger.trace(Log.footer("redirectToForm"));
 	}
-
-	// public Upload confirmed(Upload upload) {
-	// logger.debug(Log.header("confirmed", Log.entry("upload", upload)));
-	// logger.debug(Log.footer("confirmed"));
-	// return upload;
-	// }
 
 	public Upload success(Upload upload) {
 		logger.debug(Log.header("confirmed", Log.entry("upload", upload)));
