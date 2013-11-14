@@ -14,8 +14,8 @@ import com.ultrashare.component.facilities.FTPHandler;
 import com.ultrashare.component.facilities.FTPRetrieveAction;
 import com.ultrashare.component.facilities.Validate;
 import com.ultrashare.component.vo.DownloadConfirmVO;
-import com.ultrashare.dao.ShareDAO;
-import com.ultrashare.model.Share;
+import com.ultrashare.dao.DownloadDAO;
+import com.ultrashare.dao.UploadDAO;
 import com.ultrashare.model.Upload;
 
 @Resource
@@ -23,51 +23,45 @@ public class DownloadController {
 
 	private static Logger logger = Logger.getLogger(DownloadController.class);
 
-	private static final long MIN_WAIT = 10000L;
-
-	private static final long MAX_WAIT = 120000L;
-
 	private Result result;
 
-	private ShareDAO shareDao;
+	private UploadDAO uploadDao;
 
-	public DownloadController(Result result, ShareDAO shareDao) {
+	private DownloadDAO downloadDao;
+
+	public DownloadController(Result result, UploadDAO uploadDao, DownloadDAO downloadDao) {
 		this.result = result;
-		this.shareDao = shareDao;
+		this.uploadDao = uploadDao;
+		this.downloadDao = downloadDao;
 	}
 
 	@Get
 	@Path("/download/request/{id}/{confirmationCode}")
 	public void request(String id, String confirmationCode) {
 		if (!Validate.ifAnyStringIsNullOrEmpty(id, confirmationCode) && !Validate.ifAnyStringIsNotNumeric(id, confirmationCode)) {
-			Share share = shareDao.find(Long.valueOf(id));
-			if (share != null && share.getConfirmationCode().equals(Long.valueOf(confirmationCode))) {
-				result.redirectTo(this).confirm(share);
+			Upload upload = uploadDao.find(Long.valueOf(id));
+			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(confirmationCode))) {
+				result.redirectTo(this).confirm(upload);
 				return;
 			}
 		}
 		result.redirectTo(UploadController.class).form();
 	}
 
-	public DownloadConfirmVO confirm(Share share) {
-		Upload upload = new Upload("Danilo Valvezon", "danilovalvezon@hotmail.com", "hosts", "application/text", 8000L,
-				"danilovalvezon@hotmail.com,ver_dvalvezon@hotmail.com");
+	public DownloadConfirmVO confirm(Upload upload) {
+		upload = new Upload("Danilo Valvezon", "danilovalvezon@hotmail.com", "hosts", "application/text", 8000L);
 		upload.setId(1L);
-		share = new Share(upload, "danilovalvezon@hotmail.com");
-		share.setId(1L);
-		return new DownloadConfirmVO(share);
+		return new DownloadConfirmVO(upload);
 	}
 
 	// pi -> Share id, pc -> Share confirmationCode
 	@Post
 	public DownloadConfirmVO start(String pi, String pc) {
 		if (!Validate.ifAnyStringIsNullOrEmpty(pi, pc) && !Validate.ifAnyStringIsNotNumeric(pi, pc)) {
-			Share share = shareDao.find(Long.valueOf(pi));
-			if (share != null && share.getConfirmationCode().equals(Long.valueOf(pc))) {
-				share.addDownloadAttempt();
-				share.generateTimeToken();
-				shareDao.update(share);
-				return new DownloadConfirmVO(share);
+			Upload upload = uploadDao.find(Long.valueOf(pi));
+			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(pc))) {
+				// TODO - Implement validation token
+				return new DownloadConfirmVO(upload);
 			}
 		}
 		result.redirectTo(UploadController.class).form();
@@ -79,54 +73,18 @@ public class DownloadController {
 		logger.debug("download method called...");
 		if (!Validate.ifAnyStringIsNullOrEmpty(pid, pcon) && !Validate.ifAnyStringIsNotNumeric(pid, pcon)) {
 			logger.debug("Params ok...");
-			Share share = shareDao.find(Long.valueOf(pid));
-			// Long diffTime;
+			Upload upload = uploadDao.find(Long.valueOf(pid));
 			logger.debug("submitting validation: id=" + pid + " code=" + pcon);
-			logger.debug(share.getConfirmationCode().equals(Long.valueOf(pcon)));
-			if (share != null && share.getConfirmationCode().equals(Long.valueOf(pcon))) {
+			logger.debug(upload.getConfirmationCode().equals(Long.valueOf(pcon)));
+			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(pcon))) {
+				downloadDao.save(new com.ultrashare.model.Download(upload));
 				logger.debug("passed.");
-				// && (diffTime = System.currentTimeMillis() -
-				// share.getLastTimeToken()) >= MIN_WAIT && diffTime <=
-				// MAX_WAIT) {
-				return new InputStreamDownload(FTPHandler.processFTPAction(new FTPRetrieveAction(share.getSharedUpload().getFileName())),
-						"application/octet-stream", share.getSharedUpload().getFileName(), false, share.getSharedUpload().getFileSize());
+				return new InputStreamDownload(FTPHandler.processFTPAction(new FTPRetrieveAction(upload.getId().toString())), "application/octet-stream",
+						upload.getFileName(), false, upload.getFileSize());
 			}
-			logger.debug("verification failure. share code=" + share.getConfirmationCode());
+			logger.debug("verification failure. share code=" + upload.getConfirmationCode());
 		}
 		result.forwardTo(UploadController.class).form();
 		return null;
-		// return new InputStreamDownload(FTPHandler.processFTPAction(new
-		// FTPRetrieveAction(fileName)), "application/octet-stream",
-		// "test.txt");
 	}
-
-	// @Get
-	// @Path("/download/download/{pi}/{pc}")
-	// private Download download(String pi, String pc) {
-	// logger.debug("download method called...");
-	// if (!Validate.ifAnyStringIsNullOrEmpty(pi, pc) &&
-	// !Validate.ifAnyStringIsNotNumeric(pi, pc)) {
-	// logger.debug("Params ok...");
-	// Share share = shareDao.find(Long.valueOf(pi));
-	// // Long diffTime;
-	// logger.debug("submitting validation: id=" + pi + " code=" + pc);
-	// logger.debug(share.getConfirmationCode().equals(Long.valueOf(pc)));
-	// if (share != null &&
-	// share.getConfirmationCode().equals(Long.valueOf(pc))) {
-	// logger.debug("passed.");
-	// // && (diffTime = System.currentTimeMillis() -
-	// // share.getLastTimeToken()) >= MIN_WAIT && diffTime <=
-	// // MAX_WAIT) {
-	// return new InputStreamDownload(FTPHandler.processFTPAction(new
-	// FTPRetrieveAction(share.getSharedUpload().getFileName())), share
-	// .getSharedUpload().getFileContentType(),
-	// share.getSharedUpload().getFileName(), false,
-	// share.getSharedUpload().getFileSize());
-	// }
-	// logger.debug("verification failure. share code=" +
-	// share.getConfirmationCode());
-	// }
-	// result.forwardTo(UploadController.class).form();
-	// return null;
-	// }
 }

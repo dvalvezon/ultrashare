@@ -1,15 +1,12 @@
 package com.ultrashare.model;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Upload {
@@ -18,47 +15,43 @@ public class Upload {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false)
 	private String senderName;
 
+	@Column(nullable = false)
 	private String senderEmail;
 
+	@Column(nullable = false)
 	private String fileName;
 
+	@Column(nullable = false)
 	private String fileContentType;
 
+	@Column(nullable = false)
 	private Long fileSize;
 
-	private String recipients;
-
+	@Column(nullable = false)
 	private Calendar creationDate;
 
+	@Column(nullable = false)
 	private Long creationTimeInMillis;
-
-	private Boolean isAlreadyConfirmed;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sharedUpload")
-	private List<Share> shares;
 
 	public Upload() {
 
 	}
 
-	public Upload(String senderName, String senderEmail, String fileName, String fileContentType, Long fileSize, String recipients) {
+	public Upload(String senderName, String senderEmail, String fileName, String fileContentType, Long fileSize) {
 		this.senderName = senderName;
 		this.senderEmail = senderEmail;
 		this.fileName = fileName;
 		this.fileContentType = fileContentType;
 		this.fileSize = fileSize;
-		this.recipients = recipients;
 		this.creationDate = Calendar.getInstance();
 		this.creationTimeInMillis = creationDate.getTimeInMillis();
-		this.isAlreadyConfirmed = false;
-		this.shares = new ArrayList<Share>();
 	}
 
 	public Long getConfirmationCode() {
-		return creationTimeInMillis + senderName.hashCode() + senderEmail.hashCode() + fileName.hashCode() + recipients.hashCode()
-				+ isAlreadyConfirmed.hashCode();
+		return creationTimeInMillis + senderName.hashCode() + senderEmail.hashCode() + fileName.hashCode() + fileContentType.hashCode() + fileSize.hashCode();
 	}
 
 	public Long getId() {
@@ -109,14 +102,6 @@ public class Upload {
 		this.fileSize = fileSize;
 	}
 
-	public String getRecipients() {
-		return recipients;
-	}
-
-	public void setRecipients(String recipients) {
-		this.recipients = recipients;
-	}
-
 	public Calendar getCreationDate() {
 		return creationDate;
 	}
@@ -133,26 +118,10 @@ public class Upload {
 		this.creationTimeInMillis = creationTimeInMillis;
 	}
 
-	public Boolean getIsAlreadyConfirmed() {
-		return isAlreadyConfirmed;
-	}
-
-	public void setIsAlreadyConfirmed(Boolean isAlreadyConfirmed) {
-		this.isAlreadyConfirmed = isAlreadyConfirmed;
-	}
-
-	public List<Share> getShares() {
-		return shares;
-	}
-
-	public void setShares(List<Share> shares) {
-		this.shares = shares;
-	}
-
 	public String getFileSizeAsString() {
 		Long size = this.fileSize;
 		if (size < 1024) {
-			return size + " B";
+			return size + " Bytes";
 		} else {
 			size = size / 1024;
 			if (size < 1024) {
@@ -166,5 +135,16 @@ public class Upload {
 				}
 			}
 		}
+	}
+
+	@Override
+	public Object clone() {
+		Object returnObject = null;
+		try {
+			returnObject = super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return returnObject;
 	}
 }

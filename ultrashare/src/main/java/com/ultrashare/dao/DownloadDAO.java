@@ -6,16 +6,16 @@ import javax.persistence.EntityManager;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 
-import com.ultrashare.model.Share;
+import com.ultrashare.model.Download;
 
 @Component
 @RequestScoped
-public class ShareDAO extends GenericDAO<Share> {
+public class DownloadDAO extends GenericDAO<Download> {
 
 	private EntityManager em;
 
-	public ShareDAO(EntityManager em) {
-		super(Share.class, em);
+	public DownloadDAO(EntityManager em) {
+		super(Download.class, em);
 		this.em = em;
 	}
 

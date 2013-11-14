@@ -8,9 +8,9 @@ import br.com.caelum.vraptor.ioc.Component;
 @ApplicationScoped
 public class CustomMultipartConfig extends DefaultMultipartConfig {
 
-	private static final long ONE_GIGABYTE_SIZE_LIMIT = 1073741824;
+	private static final long TEN_GIGABYTE_SIZE_LIMIT = 10737418240L;
 
 	public long getSizeLimit() {
-		return ONE_GIGABYTE_SIZE_LIMIT;
+		return TEN_GIGABYTE_SIZE_LIMIT;
 	}
 }

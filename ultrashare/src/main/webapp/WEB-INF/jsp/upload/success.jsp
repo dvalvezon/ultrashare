@@ -12,7 +12,7 @@
 	        </div>
 	        <div class="col-lg-12">
 				<div class="alert alert-warning">
-					<label>A confirmation email will be sent to ${upload.senderEmail} shortly.</label>
+					<label>The download link will be sent to ${upload.senderEmail} shortly.</label>
 				</div>
 	        </div>
 	        <div class="col-lg-12">

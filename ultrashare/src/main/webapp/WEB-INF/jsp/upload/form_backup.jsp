@@ -46,11 +46,32 @@
 								<input id="userMail" type="email" name="userMail" class="form-control" placeholder="Your eMail" required data-validation-required-message="Please enter your eMail" />
 							</div>
 						</div>
-						<button id="nextRow2" class="btn btn-danger" type="button">Send it!</button>
+						<button id="nextRow2" class="btn btn-info" type="button">Next!</button>
 					</div>
 		        </div>
 	    	</div>
 	    	<div class="row" hidden="hidden" id="row3">
+		   		<div class="col-lg-12">
+					<div class="alert alert-info">
+						<label>Now just input your friend's eMail</label>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">m@ails</span>
+								<input type="text" id="mailInput" class="form-control" placeholder="Use ',' to input multiple emails" />
+								<span class="input-group-btn">
+									<button id="addMails" class="btn btn-default" type="button">Add</button>
+								</span>
+								<input type="text" class="sr-only" name="friendsMails" id="friendsMails">
+							</div>
+						</div>
+						<ul id="mailList" class="list-group">
+						</ul>
+						<br />
+						<button id="nextRow3" class="btn btn-danger" type="button">Send it!</button>
+					</div>
+		        </div>
+	    	</div>
+	    	<div class="row" hidden="hidden" id="row4">
 		   		<div class="col-lg-12">
 					<div class="alert alert-warning">
 						<label>Hold on! Your file is being uploaded..</label>
@@ -71,8 +92,7 @@
 // 				$('#row3').hide();
 // 				$('#row4').hide();
 				$('#userFile').change(function() {
-					var pathArray = $(this).val().split('\\');
-					$('#subfile').val(pathArray[pathArray.length - 1]);
+					$('#subfile').val($(this).val());
 				});
 				$('#nextRow1').click(function() {
 					if($('#uploadForm').valid()){
@@ -85,8 +105,28 @@
 					if($('#uploadForm').valid()){
 						$('#row2').hide();
 						$('#row3').show();
-						$('#uploadForm').submit();
+						$('#mailInput').focus();
 					} 
+				});
+				$('#nextRow3').click(function() {
+					$('#friendsMails').val(emails.join());
+					if($('#uploadForm').valid()){
+						$('#row3').hide();
+						$('#row4').show();
+						$('#uploadForm').submit();
+					} else {
+						$('#friendsMails').val('');
+					}
+				});
+				$('#addMails').click(function() {
+					$.each($('#mailInput').val().split(','), function (index, value) {
+						if(isValidEmail(value) && !isRepeatedEmail(value)) {
+							emails.push(value);
+							$('#mailList').append('<li class="list-group-item">' + value + '</li>');
+						}
+					});
+					$('#mailInput').val('');
+					$('#mailInput').focus();
 				});
 				$('#uploadForm').validate({
 			        rules: {
@@ -100,6 +140,9 @@
 			            userMail: {
 			                minlength: 6,
 			                required: true
+			            },
+			            friendsMails: {
+			            	required: true
 			            }
 			        },
 			        highlight: function(element) {
@@ -119,6 +162,19 @@
 			        }
 			    });
 			});
+			function isValidEmail(email) {
+				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				return regex.test(email);
+			}
+			function isRepeatedEmail(value) {
+				var lenght = emails.length;
+				for(var i = 0; i < lenght; i++){
+					if(emails[i] == value) {
+						return true;
+					}
+				}
+				return false;
+			}
 		</script>
 	</jsp:body>
 </t:template>

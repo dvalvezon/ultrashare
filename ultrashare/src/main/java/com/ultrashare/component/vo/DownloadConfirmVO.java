@@ -2,7 +2,7 @@ package com.ultrashare.component.vo;
 
 import java.text.SimpleDateFormat;
 
-import com.ultrashare.model.Share;
+import com.ultrashare.model.Upload;
 
 public final class DownloadConfirmVO {
 
@@ -22,14 +22,14 @@ public final class DownloadConfirmVO {
 
 	private final String confirmationCode;
 
-	public DownloadConfirmVO(Share share) {
-		fileName = share.getSharedUpload().getFileName();
-		fileSize = share.getSharedUpload().getFileSizeAsString();
-		uploadDate = DATE_FORMAT.format(share.getCreationDate().getTime());
-		uploaderName = share.getSharedUpload().getSenderName();
-		uploaderEmail = share.getSharedUpload().getSenderEmail();
-		id = share.getId().toString();
-		confirmationCode = share.getConfirmationCode().toString();
+	public DownloadConfirmVO(Upload upload) {
+		fileName = upload.getFileName();
+		fileSize = upload.getFileSizeAsString();
+		uploadDate = DATE_FORMAT.format(upload.getCreationDate().getTime());
+		uploaderName = upload.getSenderName();
+		uploaderEmail = upload.getSenderEmail();
+		id = upload.getId().toString();
+		confirmationCode = upload.getConfirmationCode().toString();
 	}
 
 	public String getFileName() {
