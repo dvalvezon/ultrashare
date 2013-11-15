@@ -22,6 +22,8 @@ public final class DownloadConfirmVO {
 
 	private final String confirmationCode;
 
+	private final String downloadLink;
+
 	public DownloadConfirmVO(Upload upload) {
 		fileName = upload.getFileName();
 		fileSize = upload.getFileSizeAsString();
@@ -30,6 +32,7 @@ public final class DownloadConfirmVO {
 		uploaderEmail = upload.getSenderEmail();
 		id = upload.getId().toString();
 		confirmationCode = upload.getConfirmationCode().toString();
+		downloadLink = "http://ultrashare.valvezon.com/download/request/" + id + "/" + confirmationCode;
 	}
 
 	public String getFileName() {
@@ -58,6 +61,10 @@ public final class DownloadConfirmVO {
 
 	public String getConfirmationCode() {
 		return confirmationCode;
+	}
+
+	public String getDownloadLink() {
+		return downloadLink;
 	}
 
 }

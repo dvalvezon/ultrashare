@@ -63,7 +63,6 @@
 	    <script src="../js/additional-methods.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 	   	<script>
-	   		var emails = new Array();
 			$(document).ready(function() {
 				$('#row0').hide();
 				$('#row1').show();
