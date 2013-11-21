@@ -6,15 +6,11 @@ public class ShareVO {
 
 	private final String[] recipients;
 	private final String sharerName;
-	private final String sharerEmail;
-	private final String shareMessage;
 	private final Upload upload;
 
-	public ShareVO(String[] recipients, String sharerName, String sharerEmail, String shareMessage, Upload upload) {
+	public ShareVO(String[] recipients, String sharerName, Upload upload) {
 		this.recipients = recipients;
 		this.sharerName = sharerName;
-		this.sharerEmail = sharerEmail;
-		this.shareMessage = shareMessage;
 		this.upload = upload;
 	}
 
@@ -24,14 +20,6 @@ public class ShareVO {
 
 	public String getSharerName() {
 		return sharerName;
-	}
-
-	public String getSharerEmail() {
-		return sharerEmail;
-	}
-
-	public String getShareMessage() {
-		return shareMessage;
 	}
 
 	public Upload getUpload() {
