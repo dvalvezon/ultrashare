@@ -9,6 +9,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>UltraSHARE</title>
+<link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
 <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
