@@ -15,7 +15,7 @@ import com.ultrashare.component.facilities.EntityManagerProxy;
 @ApplicationScoped
 public class EntityManagerCreator implements ComponentFactory<EntityManager> {
 
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("hsqldb");
+	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
 
 	@PreDestroy
 	private void closeEntityManagerFactoryOnApplicationShutdown() {
