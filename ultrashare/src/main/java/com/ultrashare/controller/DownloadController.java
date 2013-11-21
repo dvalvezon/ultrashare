@@ -7,7 +7,6 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.interceptor.download.Download;
 import br.com.caelum.vraptor.interceptor.download.InputStreamDownload;
 
 import com.ultrashare.component.facilities.FTPHandler;
@@ -17,6 +16,7 @@ import com.ultrashare.component.facilities.Validate;
 import com.ultrashare.component.vo.DownloadConfirmVO;
 import com.ultrashare.dao.DownloadDAO;
 import com.ultrashare.dao.UploadDAO;
+import com.ultrashare.model.Download;
 import com.ultrashare.model.Upload;
 
 @Resource
@@ -73,6 +73,7 @@ public class DownloadController {
 				&& !Validate.ifAnyStringIsNullOrEmpty(upload.getFileContentType(), upload.getFileName(), upload.getSenderEmail(), upload.getSenderName())) {
 			logger.debug(Log.message("Parameters validated."));
 			returnVO = new DownloadConfirmVO(upload);
+			logger.debug(Log.message("Loading confirm page."));
 		} else {
 			logger.debug(Log.message("Invalid parameters"));
 			redirectToForm();
@@ -85,40 +86,60 @@ public class DownloadController {
 	@Get
 	@Post
 	public DownloadConfirmVO start(String pi, String pc) {
-		Upload upload = new Upload("Danilo Valvezon", "danilovalvezon@hotmail.com", "hosts", "application/text", 8000L);
-		upload.setId(1L);
-		return new DownloadConfirmVO(upload);
-		// if (!Validate.ifAnyStringIsNullOrEmpty(pi, pc) &&
-		// !Validate.ifAnyStringIsNotNumeric(pi, pc)) {
-		// Upload upload = uploadDao.find(Long.valueOf(pi));
-		// if (upload != null &&
-		// upload.getConfirmationCode().equals(Long.valueOf(pc))) {
-		// // TODO - Implement validation token
+		// Upload upload = new Upload("Danilo Valvezon",
+		// "danilovalvezon@hotmail.com", "hosts", "application/text", 8000L);
+		// upload.setId(1L);
 		// return new DownloadConfirmVO(upload);
-		// }
-		// }
-		// redirectToForm();
-		// return null;
+		logger.debug(Log.header("start", Log.entry("pi", pi), Log.entry("pc", pc)));
+		DownloadConfirmVO returnVO = null;
+		logger.debug(Log.message("Validating parameters."));
+		if (!Validate.ifAnyStringIsNullOrEmpty(pi, pc) && !Validate.ifAnyStringIsNotNumeric(pi, pc)) {
+			logger.debug(Log.message("Parameters validated."));
+			Upload upload = uploadDao.find(Long.valueOf(pi));
+			logger.debug(Log.message("Upload loaded.", Log.entry("upload", upload)));
+			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(pc))) {
+				logger.debug(Log.message("Validating upload"));
+				// TODO - Implement validation token
+				returnVO = new DownloadConfirmVO(upload);
+			} else {
+				logger.debug(Log.message("Confirmation code does not match..."));
+				redirectToForm();
+			}
+		} else {
+			logger.debug(Log.message("Parameters not valid..."));
+			redirectToForm();
+		}
+		logger.debug(Log.footer("start"));
+		return returnVO;
 	}
 
 	@Post
-	public Download download(String pid, String pcon) {
-		logger.debug("download method called...");
+	public br.com.caelum.vraptor.interceptor.download.Download download(String pid, String pcon) {
+		logger.debug(Log.header("download", Log.entry("pid", pid), Log.entry("pcon", pcon)));
+		br.com.caelum.vraptor.interceptor.download.Download returnedDownload = null;
+		logger.debug(Log.message("Validating parameters."));
 		if (!Validate.ifAnyStringIsNullOrEmpty(pid, pcon) && !Validate.ifAnyStringIsNotNumeric(pid, pcon)) {
-			logger.debug("Params ok...");
+			logger.debug(Log.message("Parameters validated. Loading upload..."));
 			Upload upload = uploadDao.find(Long.valueOf(pid));
-			logger.debug("submitting validation: id=" + pid + " code=" + pcon);
-			logger.debug(upload.getConfirmationCode().equals(Long.valueOf(pcon)));
+			logger.debug(Log.message("Upload loaded. Validating confirmation code..."));
 			if (upload != null && upload.getConfirmationCode().equals(Long.valueOf(pcon))) {
-				downloadDao.save(new com.ultrashare.model.Download(upload));
+				logger.debug(Log.message("Confirmation code validated. Saving download register..."));
+				Download download = new Download(upload);
+				downloadDao.save(download);
+				logger.info(Log.message("Download registered.", "Submitting file to client.", Log.entry("download", download)));
 				logger.debug("passed.");
-				return new InputStreamDownload(FTPHandler.processFTPAction(new FTPRetrieveAction(upload.getId().toString())), "application/octet-stream",
-						upload.getFileName(), false, upload.getFileSize());
+				returnedDownload = new InputStreamDownload(FTPHandler.processFTPAction(new FTPRetrieveAction(upload.getId().toString())),
+						"application/octet-stream", upload.getFileName(), false, upload.getFileSize());
+			} else {
+				logger.debug(Log.message("Confirmation code does not match..."));
+				redirectToForm();
 			}
-			logger.debug("verification failure. share code=" + upload.getConfirmationCode());
+		} else {
+			logger.debug(Log.message("Parameters not valid."));
+			redirectToForm();
 		}
-		redirectToForm();
-		return null;
+		logger.debug(Log.footer("download", returnedDownload));
+		return returnedDownload;
 	}
 
 	private void redirectToForm() {
