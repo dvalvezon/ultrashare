@@ -1,4 +1,3 @@
-<%@page import="java.util.List"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
@@ -22,7 +21,7 @@
 								<span class="input-group-btn">
 									<button class="form-control" type="button" onclick="$('#userFile').click();">Browse</button>
 								</span>
-								<input type="text" disabled="disabled" id="subfile" name="subfile" class="form-control" />
+								<input type="text" disabled="disabled" id="subfile" name="subfile" class="form-control" placeholder="Current file size limit is 10 GB" />
 							</div>
 							<input class="sr-only" type="file" id="userFile" name="userFile" />
 						</div>
