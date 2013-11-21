@@ -28,6 +28,7 @@ public class Download {
 
 	public Download(Upload referredUpload) {
 		this.referredUpload = referredUpload;
+		this.downloadDate = Calendar.getInstance();
 	}
 
 	public Long getId() {
@@ -56,12 +57,15 @@ public class Download {
 
 	@Override
 	public Object clone() {
-		Object returnObject = null;
-		try {
-			returnObject = super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		return returnObject;
+		Download clonedDownload = new Download();
+		clonedDownload.setDownloadDate((Calendar) downloadDate.clone());
+		clonedDownload.setId(id);
+		clonedDownload.setReferredUpload((Upload) referredUpload.clone());
+		return clonedDownload;
+	}
+
+	@Override
+	public String toString() {
+		return "(ref=" + super.toString() + ",id=" + id + ",referredUpload=" + referredUpload + ",downloadDate=" + downloadDate + ")";
 	}
 }
