@@ -1,5 +1,6 @@
 package com.ultrashare.model;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -119,19 +120,20 @@ public class Upload {
 	}
 
 	public String getFileSizeAsString() {
-		Long size = this.fileSize;
+		DecimalFormat df = new DecimalFormat("#.##");
+		Double size = this.fileSize.doubleValue();
 		if (size < 1024) {
 			return size + " Bytes";
 		} else {
 			size = size / 1024;
 			if (size < 1024) {
-				return size + " KB";
+				return df.format(size) + " KB";
 			} else {
 				size = size / 1024;
 				if (size < 1024) {
-					return size + " MB";
+					return df.format(size) + " MB";
 				} else {
-					return (size / 1024) + " GB";
+					return df.format((size / 1024)) + " GB";
 				}
 			}
 		}
@@ -139,12 +141,22 @@ public class Upload {
 
 	@Override
 	public Object clone() {
-		Object returnObject = null;
-		try {
-			returnObject = super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		return returnObject;
+		Upload clonedUpload = new Upload();
+		clonedUpload.setCreationDate((Calendar) creationDate.clone());
+		clonedUpload.setCreationTimeInMillis(creationTimeInMillis);
+		clonedUpload.setFileContentType(fileContentType);
+		clonedUpload.setFileName(fileName);
+		clonedUpload.setFileSize(fileSize);
+		clonedUpload.setId(id);
+		clonedUpload.setSenderEmail(senderEmail);
+		clonedUpload.setSenderName(senderName);
+		return clonedUpload;
+	}
+
+	@Override
+	public String toString() {
+		return "(ref=" + super.toString() + ",id=" + id + ",senderName=" + senderName + ",senderEmail=" + senderEmail + ",fileName=" + fileName
+				+ "fileContentType=" + fileContentType + ",fileSize=" + fileSize + ",creationDate=" + creationDate + ",creationTimeInMillis="
+				+ creationTimeInMillis + ")";
 	}
 }
