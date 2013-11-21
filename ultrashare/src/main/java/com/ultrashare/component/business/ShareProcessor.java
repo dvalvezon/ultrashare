@@ -10,7 +10,7 @@ import com.ultrashare.model.Upload;
 
 public class ShareProcessor extends AbstractProcessor<ShareVO> {
 
-	private static String SHARE_EMAIL_MESSAGE_PATTERN = "Greetings!\n\n<senderName> (<senderMail>) has shared \"<fileName>\" with you!\n\nTo download this file please click the link below:\n\n<confirmationLink>\n\nUltraSHARE is a place where you can share anything, with anyone.\nVisit us at http://ultrashare.valvezon.com\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email:\nsupport.ultrashare@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";
+	private static String SHARE_EMAIL_MESSAGE_PATTERN = "Greetings!\n\n<sharerName> has shared \"<fileName>\" with you!\n\nTo download this file please click the link below:\n\n<confirmationLink>\n\nUltraSHARE is a place where you can share anything, with anyone.\nVisit us at http://ultrashare.valvezon.com\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email:\nsupport.ultrashare@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";
 	private static String SHARE_EMAIL_SUBJECT_PATTERN = "<sharerName> has shared \"<fileName>\" with you in UltraSHARE!";
 	private static String SHARE_EMAIL_LINK_PATTERN = "http://ultrashare.valvezon.com/download/request/<id>/<confirmationCode>";
 
@@ -18,8 +18,8 @@ public class ShareProcessor extends AbstractProcessor<ShareVO> {
 	protected void execute(ShareVO processItem) {
 		List<MailVO> mailsVO = new ArrayList<MailVO>(1);
 		mailsVO.add(new MailVO(processItem.getRecipients(), SHARE_EMAIL_SUBJECT_PATTERN.replaceAll("<sharerName>", processItem.getSharerName()).replaceAll(
-				"<fileName>", processItem.getUpload().getFileName()), getShareMailMessage(processItem.getSharerName(), processItem.getSharerEmail(),
-				processItem.getUpload().getFileName(), getShareLink(processItem.getUpload()))));
+				"<fileName>", processItem.getUpload().getFileName()), getShareMailMessage(processItem.getSharerName(), processItem.getUpload().getFileName(),
+				getShareLink(processItem.getUpload()))));
 		submitShareEmail(mailsVO);
 	}
 
@@ -27,8 +27,8 @@ public class ShareProcessor extends AbstractProcessor<ShareVO> {
 		MailSender.sendMails(mailsVO);
 	}
 
-	private static String getShareMailMessage(String sharerName, String sharerEmail, String fileName, String confirmationLink) {
-		return SHARE_EMAIL_MESSAGE_PATTERN.replaceAll("<sharerName>", sharerName).replaceAll("<sharerEmail>", sharerEmail).replaceAll("<fileName>", fileName)
+	private static String getShareMailMessage(String sharerName, String fileName, String confirmationLink) {
+		return SHARE_EMAIL_MESSAGE_PATTERN.replaceAll("<sharerName>", sharerName).replaceAll("<fileName>", fileName)
 				.replaceAll("<confirmationLink>", confirmationLink);
 	}
 
