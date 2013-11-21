@@ -14,26 +14,26 @@
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="${headerContext}/">Home</a></li>
-						<li><a href="${headerContext}/">About</a></li>
-						<li><a href="${headerContext}/">Contact</a></li>
+						<li><a href="${headerContext}/">Home</a></li>
+						<li><a href="${headerContext}/main/about">About</a></li>
+						<li><a href="${headerContext}/main/contact">Contact</a></li>
 					</ul>
-					<form class="navbar-form navbar-right">
-						<div class="form-group">
-							<input type="text" disabled="disabled" placeholder="Email" class="form-control">
-						</div>
-						<div class="form-group">
-							<input type="password" disabled="disabled" placeholder="Password" class="form-control">
-						</div>
-						<button type="submit" disabled="disabled" class="btn btn-success">Sign in</button>
-					</form>
+<!-- 					<form class="navbar-form navbar-right"> -->
+<!-- 						<div class="form-group"> -->
+<!-- 							<input type="text" disabled="disabled" placeholder="Email" class="form-control"> -->
+<!-- 						</div> -->
+<!-- 						<div class="form-group"> -->
+<!-- 							<input type="password" disabled="disabled" placeholder="Password" class="form-control"> -->
+<!-- 						</div> -->
+<!-- 						<button type="submit" disabled="disabled" class="btn btn-success">Sign in</button> -->
+<!-- 					</form> -->
 				</div>
 			</div>
 		</div>
 	</jsp:attribute>
 	<jsp:attribute name="footer">
 		<div class="container">
-		  <p class="text-muted credit">v. BETA - - - Copyright © 2013 ultrashare.valvezon.com - - - Powered by <a href="http://valvezon.com">valvezon.com</a></p>
+		  <p class="text-muted credit">Copyright © 2013 ultrashare.valvezon.com</p>
 		</div>
 	  </jsp:attribute>
 	<jsp:body>
