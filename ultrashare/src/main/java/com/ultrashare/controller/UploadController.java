@@ -80,6 +80,7 @@ public class UploadController {
 	}
 
 	private Upload persistUpload(String fileName, String fileContentType, Long fileSize, String userName, String userMail) {
+		fileName = fileName.replace(",", "");
 		logger.trace(Log.header("persistUpload", Log.entry("fileName", fileName), Log.entry("fileContentType", fileContentType),
 				Log.entry("fileSize", fileSize), Log.entry("userName", userName), Log.entry("userMail", userMail)));
 		Upload upload = new Upload(userName, userMail, fileName, fileContentType, fileSize);

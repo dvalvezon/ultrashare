@@ -15,7 +15,7 @@
 	  			<div class="row" hidden="hidden" id="row1">
 		   		<div class="col-lg-12">
 					<div class="alert alert-info">
-						<label>Choose A File</label>
+						<label>Choose a file to SHARE</label>
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-btn">

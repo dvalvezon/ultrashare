@@ -157,6 +157,6 @@ public class Upload {
 	public String toString() {
 		return "(ref=" + super.toString() + ",id=" + id + ",senderName=" + senderName + ",senderEmail=" + senderEmail + ",fileName=" + fileName
 				+ "fileContentType=" + fileContentType + ",fileSize=" + fileSize + ",creationDate=" + creationDate + ",creationTimeInMillis="
-				+ creationTimeInMillis + ")";
+				+ creationTimeInMillis + ",confirmationCode=" + getConfirmationCode() + ")";
 	}
 }

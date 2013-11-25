@@ -19,7 +19,7 @@ public final class UploadProcessor extends AbstractProcessor<UploadProcessVO> {
 
 	private static String UPLOAD_EMAIL_MESSAGE_PATTERN = "Dear <recipientName>,\n\nThanks for uploading in UltraSHARE!\n\nNow you can download or share your file (<fileName>) using the link below: \n\n<downloadLink>\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email:\nsupport.ultrashare@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";
 	private static String UPLOAD_EMAIL_SUBJECT_PATTERN = "Download link for sharing \"<fileName>\" in UltraSHARE.";
-	private static String DOWNLOAD_EMAIL_LINK_PATTERN = "http://ultrashare.valvezon.com/download/request/<id>/<confirmationCode>";
+	private static String DOWNLOAD_EMAIL_LINK_PATTERN = "http://www.ultrashare.valvezon.com/download/request/<id>/<confirmationCode>";
 
 	@Override
 	protected void execute(UploadProcessVO processItem) {

@@ -10,9 +10,9 @@ import com.ultrashare.model.Upload;
 
 public class ShareProcessor extends AbstractProcessor<ShareVO> {
 
-	private static String SHARE_EMAIL_MESSAGE_PATTERN = "Greetings!\n\n<sharerName> has shared \"<fileName>\" with you!\n\nTo download this file please click the link below:\n\n<confirmationLink>\n\nUltraSHARE is a place where you can share anything, with anyone.\nVisit us at http://ultrashare.valvezon.com\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email:\nsupport.ultrashare@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";
+	private static String SHARE_EMAIL_MESSAGE_PATTERN = "Greetings!\n\n<sharerName> has shared \"<fileName>\" with you!\n\nTo download this file please click the link below:\n\n<confirmationLink>\n\nUltraSHARE is a place where you can share anything, with anyone.\nVisit us at http://www.ultrashare.valvezon.com\n\nPlease do not reply this email!\n\nIf you have any questions or problems please send us an email:\nsupport.ultrashare@valvezon.com\n\nBest Regards,\nThe UltraSHARE Team";
 	private static String SHARE_EMAIL_SUBJECT_PATTERN = "<sharerName> has shared \"<fileName>\" with you in UltraSHARE!";
-	private static String SHARE_EMAIL_LINK_PATTERN = "http://ultrashare.valvezon.com/download/request/<id>/<confirmationCode>";
+	private static String SHARE_EMAIL_LINK_PATTERN = "http://www.ultrashare.valvezon.com/download/request/<id>/<confirmationCode>";
 
 	@Override
 	protected void execute(ShareVO processItem) {

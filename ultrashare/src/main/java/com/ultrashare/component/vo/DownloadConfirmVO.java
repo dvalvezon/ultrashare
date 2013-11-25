@@ -32,7 +32,7 @@ public final class DownloadConfirmVO {
 		uploaderEmail = upload.getSenderEmail();
 		id = upload.getId().toString();
 		confirmationCode = upload.getConfirmationCode().toString();
-		downloadLink = "http://ultrashare.valvezon.com/download/request/" + id + "/" + confirmationCode;
+		downloadLink = "http://www.ultrashare.valvezon.com/download/request/" + id + "/" + confirmationCode;
 	}
 
 	public String getFileName() {
