@@ -7,10 +7,8 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.interceptor.download.InputStreamDownload;
 
-import com.ultrashare.component.facilities.FTPHandler;
-import com.ultrashare.component.facilities.FTPRetrieveAction;
+import com.ultrashare.component.business.DownloadManager;
 import com.ultrashare.component.facilities.Log;
 import com.ultrashare.component.facilities.Validate;
 import com.ultrashare.component.vo.DownloadConfirmVO;
@@ -30,10 +28,13 @@ public class DownloadController {
 
 	private DownloadDAO downloadDao;
 
-	public DownloadController(Result result, UploadDAO uploadDao, DownloadDAO downloadDao) {
+	private DownloadManager downloadManager;
+
+	public DownloadController(Result result, UploadDAO uploadDao, DownloadDAO downloadDao, DownloadManager downloadManager) {
 		this.result = result;
 		this.uploadDao = uploadDao;
 		this.downloadDao = downloadDao;
+		this.downloadManager = downloadManager;
 	}
 
 	@Get
@@ -128,8 +129,7 @@ public class DownloadController {
 				downloadDao.save(download);
 				logger.info(Log.message("Download registered.", "Submitting file to client.", Log.entry("download", download)));
 				logger.debug("passed.");
-				returnedDownload = new InputStreamDownload(FTPHandler.processFTPAction(new FTPRetrieveAction(upload.getId().toString())),
-						"application/octet-stream", upload.getFileName(), false, upload.getFileSize());
+				returnedDownload = downloadManager.createUserDownload(upload);
 			} else {
 				logger.debug(Log.message("Confirmation code does not match..."));
 				redirectToForm();
