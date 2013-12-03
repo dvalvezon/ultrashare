@@ -5,7 +5,9 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -13,6 +15,8 @@ import org.apache.log4j.Logger;
 import br.com.caelum.vraptor.ioc.ApplicationScoped;
 import br.com.caelum.vraptor.ioc.Component;
 
+import com.ultrashare.component.facilities.Log;
+import com.ultrashare.component.facilities.RetainedFileInputStream;
 import com.ultrashare.component.facilities.Validate;
 
 @Component
@@ -26,10 +30,12 @@ public final class UploadRetainer {
 	}
 
 	private Hashtable<Long, InputStreamProjection> retainerMap = new Hashtable<Long, InputStreamProjection>();
+	private Hashtable<Long, List<RetainedFileInputStream>> retainedInputStreamMap = new Hashtable<Long, List<RetainedFileInputStream>>();
 
 	protected boolean retain(Long uploadId, InputStream retainedInputStream) throws IOException {
 		if (!Validate.ifAnyObjectIsNull(uploadId, retainedInputStream)) {
 			retainerMap.put(uploadId, getInputStreamProjection(retainedInputStream));
+			retainedInputStreamMap.put(uploadId, new ArrayList<RetainedFileInputStream>());
 			return true;
 		} else {
 			return false;
@@ -50,6 +56,16 @@ public final class UploadRetainer {
 	protected boolean release(Long uploadId) {
 		if (!Validate.ifAnyObjectIsNull(uploadId) && retainerMap.containsKey(uploadId)) {
 			retainerMap.remove(uploadId);
+			List<RetainedFileInputStream> listToClean = retainedInputStreamMap.remove(uploadId);
+			for (RetainedFileInputStream retainedFileIS : listToClean) {
+				try {
+					retainedFileIS.canNowBeClosedByClient();
+				} catch (IOException e) {
+					logger.error(Log.message("Could not close a marked to close RetainedFileInputStream", Log.entry("retainedFileIS", retainedFileIS)), e);
+				}
+			}
+			// Clear all elements to prevent retained objects blocking GC on others...
+			listToClean.clear();
 			return true;
 		} else {
 			return false;
@@ -59,14 +75,9 @@ public final class UploadRetainer {
 	protected InputStream getProvisoryStream(Long uploadId) {
 		if (!Validate.ifAnyObjectIsNull(uploadId) && retainerMap.containsKey(uploadId)) {
 			InputStream returnStream = retainerMap.get(uploadId).getRealInputStream();
-			// try {
-			// returnStream = new FileInputStream(temporaryFilePath);
-			// } catch (FileNotFoundException e) {
-			// logger.error(Log.message("Could not find temporary file.",
-			// Log.entry("uploadId", uploadId), Log.entry("temporaryFilePath",
-			// temporaryFilePath)),
-			// e);
-			// }
+			if (returnStream instanceof RetainedFileInputStream) {
+				retainedInputStreamMap.get(uploadId).add((RetainedFileInputStream) returnStream);
+			}
 			return returnStream;
 		} else {
 			return null;
@@ -102,7 +113,7 @@ public final class UploadRetainer {
 
 		@Override
 		public InputStream getRealInputStream() {
-			return new FileInputStream(fileDescriptor);
+			return new RetainedFileInputStream(fileDescriptor);
 		}
 
 	}
