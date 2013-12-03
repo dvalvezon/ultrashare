@@ -1,5 +1,6 @@
 package com.ultrashare.component.business;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import br.com.caelum.vraptor.interceptor.download.Download;
@@ -21,11 +22,11 @@ public class DownloadManager {
 		this.uploadRetainer = uploadRetainer;
 	}
 
-	public Download createUserDownload(Upload upload) {
+	public Download createUserDownload(Upload upload) throws IOException {
 		return new InputStreamDownload(getInputStream(upload.getId()), "application/octet-stream", upload.getFileName(), false, upload.getFileSize());
 	}
 
-	private InputStream getInputStream(Long uploadId) {
+	private InputStream getInputStream(Long uploadId) throws IOException {
 		InputStream inputStream = null;
 		if ((inputStream = uploadRetainer.getProvisoryStream(uploadId)) == null) {
 			inputStream = FTPHandler.processFTPAction(new FTPRetrieveAction(uploadId.toString()));

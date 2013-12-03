@@ -1,5 +1,7 @@
 package com.ultrashare.controller;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 
 import br.com.caelum.vraptor.Get;
@@ -129,7 +131,11 @@ public class DownloadController {
 				downloadDao.save(download);
 				logger.info(Log.message("Download registered.", "Submitting file to client.", Log.entry("download", download)));
 				logger.debug("passed.");
-				returnedDownload = downloadManager.createUserDownload(upload);
+				try {
+					returnedDownload = downloadManager.createUserDownload(upload);
+				} catch (IOException e) {
+					logger.error(Log.message("Could not create user download...", Log.entry("upload", upload)), e);
+				}
 			} else {
 				logger.debug(Log.message("Confirmation code does not match..."));
 				redirectToForm();

@@ -47,6 +47,21 @@
 	    	<div class="row">
 	    		<div class="col-lg-9">
 	    			<div class="well">
+			    		<div class="row">
+		    				<div class="col-lg-12">
+		    					<form id="searchForm" action="${headerContext}/main/search" method="post">
+		    						<div class="alert alert-info">
+				    					<div class="input-group">
+											<span class="input-group-addon">Search</span>
+											<input type="text" id="keyword" name="keyword" class="form-control" placeholder="File Name..." />
+											<span class="input-group-btn">
+												<button type="submit" class="btn btn-primary">Ok</button>
+											</span>
+										</div>
+				    				</div>
+		    					</form>
+		    				</div>
+		    			</div>
 						<jsp:doBody />
 					</div>
 	    		</div>
