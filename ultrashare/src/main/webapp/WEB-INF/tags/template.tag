@@ -55,7 +55,9 @@
 											<span class="input-group-addon">Search</span>
 											<input type="text" id="keyword" name="keyword" class="form-control" placeholder="File Name..." />
 											<span class="input-group-btn">
-												<button type="submit" class="btn btn-primary">Ok</button>
+												<button type="submit" class="btn btn-primary">
+													<span class="glyphicon glyphicon-search"></span>
+												</button>
 											</span>
 										</div>
 				    				</div>
