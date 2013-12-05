@@ -8,9 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({ @NamedQuery(name = "UPLOADS_BY_FILE_NAME", query = "select u from Upload u where u.fileName like :fileName") })
 public class Upload {
+
+	public final static String UPLOADS_BY_FILE_NAME = "UPLOADS_BY_FILE_NAME";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
