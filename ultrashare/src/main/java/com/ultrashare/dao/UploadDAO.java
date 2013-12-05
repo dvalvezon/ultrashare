@@ -1,5 +1,8 @@
 package com.ultrashare.dao;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.annotation.PreDestroy;
 import javax.persistence.EntityManager;
 
@@ -17,6 +20,12 @@ public class UploadDAO extends GenericDAO<Upload> {
 	public UploadDAO(EntityManager em) {
 		super(Upload.class, em);
 		this.em = em;
+	}
+
+	public List<Upload> findUploadsByFileName(String fileName) {
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("fileName", "%" + fileName + "%");
+		return super.findResults(Upload.UPLOADS_BY_FILE_NAME, parameters);
 	}
 
 	@PreDestroy
