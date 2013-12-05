@@ -4,7 +4,7 @@
 <t:template>
 	<jsp:body>
 		<c:set var="bodyContext" value="${pageContext.request.contextPath}"/>
-		<form id="uploadForm" role="form" action="${bodyContext}/upload/upload" enctype="multipart/form-data" method="post">
+		<form id="uploadForm" action="${bodyContext}/upload/upload" enctype="multipart/form-data" method="post">
   			<div class="row" id="row0">
 		   		<div class="col-lg-12">
 					<div class="alert alert-warning">
