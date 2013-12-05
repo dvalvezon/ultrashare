@@ -35,7 +35,7 @@ public class MainController {
 	public List<SearchVO> search(String keyword) {
 		logger.debug(Log.header("search", Log.entry("keyword", keyword)));
 		ArrayList<SearchVO> searchItems = new ArrayList<SearchVO>();
-		for (Upload upload : uploadDao.findAll()) {
+		for (Upload upload : uploadDao.findUploadsByFileName(keyword)) {
 			searchItems.add(new SearchVO(upload));
 		}
 		logger.debug(Log.footer("error"));
