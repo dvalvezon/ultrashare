@@ -1,5 +1,7 @@
 package com.ultrashare.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import br.com.caelum.vraptor.Get;
@@ -11,6 +13,7 @@ import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import com.ultrashare.component.business.UploadProcessor;
 import com.ultrashare.component.facilities.Log;
 import com.ultrashare.component.facilities.Validate;
+import com.ultrashare.component.vo.SearchVO;
 import com.ultrashare.component.vo.UploadProcessVO;
 import com.ultrashare.dao.UploadDAO;
 import com.ultrashare.model.Upload;
@@ -33,9 +36,10 @@ public class UploadController {
 	}
 
 	@Get
-	public void form() {
+	public List<SearchVO> form() {
 		logger.debug(Log.header("form"));
 		logger.debug(Log.footer("form"));
+		return null;
 	}
 
 	@Post
