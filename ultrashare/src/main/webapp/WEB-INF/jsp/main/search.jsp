@@ -6,7 +6,7 @@
 		<c:set var="bodyContext" value="${pageContext.request.contextPath}"/>
     	<div class="row">
     		<div class="col-lg-12">
-    			<t:uploadResultsPanel searchVOList="${searchVOList}"></t:uploadResultsPanel>
+    			<t:uploadResultsPanel searchVOList="${searchVOList}" panelTitle="Search Results (${searchVOList.size()})" />
 <!--     			<div class="panel panel-default"> -->
 <%--     				<div class="panel-heading">Search Results (${searchVOList.size()})</div> --%>
 <%--     				<c:if test="${searchVOList.isEmpty()}"> --%>
