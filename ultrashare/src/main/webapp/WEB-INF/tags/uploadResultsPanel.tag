@@ -2,9 +2,10 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ attribute name="searchVOList" required="true" type="java.util.List" %>
-
+<%@ attribute name="panelTitle" required="true" type="java.lang.String" %>
+<c:set var="panelContext" value="${pageContext.request.contextPath}"/>
 <div class="panel panel-default">
-   	<div class="panel-heading">Search Results (${searchVOList.size()})</div>
+   	<div class="panel-heading"><b>${panelTitle}</b></div>
 	<c:if test="${searchVOList.isEmpty()}">
 		<div class="panel-body">
 			<p>No file(s) found...</p>
@@ -29,7 +30,7 @@
 						<td>${item.fileSize}</td>
 						<td>${item.creationDate}</td>
 						<td>
-							<button type="button" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-download-alt"></span></button>
+							<button type="button" class="btn btn-xs btn-danger" onclick="window.location.href='${panelContext}${item.link}';"><span class="glyphicon glyphicon-download-alt"></span></button>
 						</td>
 					</tr>
 				</c:forEach>
