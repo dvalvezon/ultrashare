@@ -12,8 +12,9 @@
 					</div>
 		        </div>
 	    	</div>
-	  			<div class="row" hidden="hidden" id="row1">
+  			<div class="row" hidden="hidden" id="row1">
 		   		<div class="col-lg-12">
+		   			<t:uploadResultsPanel searchVOList="${searchVOList}" panelTitle="Last ${searchVOList.size()} Files Uploaded" />
 					<div class="alert alert-info">
 						<label>Choose a file to SHARE</label>
 						<div class="form-group">

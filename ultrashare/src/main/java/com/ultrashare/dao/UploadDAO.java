@@ -28,6 +28,10 @@ public class UploadDAO extends GenericDAO<Upload> {
 		return super.findResults(Upload.UPLOADS_BY_FILE_NAME, parameters);
 	}
 
+	public List<Upload> findLastUploads(Integer quantity) {
+		return super.findResults(Upload.LAST_UPLOADS, new HashMap<String, Object>(), quantity);
+	}
+
 	@PreDestroy
 	private void closeEmAfterRequest() {
 		if (em.isOpen()) {

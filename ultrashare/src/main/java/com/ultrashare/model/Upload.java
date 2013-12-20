@@ -12,10 +12,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "UPLOADS_BY_FILE_NAME", query = "select u from Upload u where u.fileName like :fileName") })
+@NamedQueries({ @NamedQuery(name = "UPLOADS_BY_FILE_NAME", query = "select u from Upload u where u.fileName like :fileName"),
+		@NamedQuery(name = "LAST_UPLOADS", query = "select u from Upload u order by u.id desc") })
 public class Upload {
 
 	public final static String UPLOADS_BY_FILE_NAME = "UPLOADS_BY_FILE_NAME";
+	public final static String LAST_UPLOADS = "LAST_UPLOADS";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

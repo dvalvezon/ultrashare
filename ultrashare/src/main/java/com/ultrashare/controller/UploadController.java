@@ -1,5 +1,6 @@
 package com.ultrashare.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -38,8 +39,12 @@ public class UploadController {
 	@Get
 	public List<SearchVO> form() {
 		logger.debug(Log.header("form"));
+		List<SearchVO> lastUploads = new ArrayList<SearchVO>();
+		for (Upload upload : uploadDao.findLastUploads(10)) {
+			lastUploads.add(new SearchVO(upload));
+		}
 		logger.debug(Log.footer("form"));
-		return null;
+		return lastUploads;
 	}
 
 	@Post
